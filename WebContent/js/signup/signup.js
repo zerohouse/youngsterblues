@@ -41,7 +41,7 @@
 			return;
 		}
 		$.ajax({
-			url : "users/checkid",
+			url : "/users/checkid",
 			type : "POST",
 			data : {
 				id : id.val()
@@ -124,7 +124,7 @@
 		};
 
 		$.ajax({
-			url : "users/signup",
+			url : "/users/signup",
 			type : "POST",
 			data : {
 				user : JSON.stringify(user)

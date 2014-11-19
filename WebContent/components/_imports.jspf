@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<script src="/js/jquery.js"></script>
-<script src="/js/bootstrap.min.js"></script>
-<script src="/js/bootstrap-tooltip.js"></script>
+<script src="/plugin/jquery/jquery.js"></script>
+<script src="/plugin/bootstrap/bootstrap.min.js"></script>
+<script src="/plugin/bootstrap/bootstrap-tooltip.js"></script>
+<script src="/plugin/showup/showup.js"></script>
 <script src="/js/header/header.js"></script>

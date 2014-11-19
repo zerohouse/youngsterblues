@@ -13,10 +13,6 @@
 <body>
 
 	<%@ include file="/components/_header.jspf"%>
-	<br>
-	<br>
-	<br>
-	<br>
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
@@ -33,13 +29,13 @@
 							</div>
 							
 							<div class="input-group input-group-lg">
-								<span class="input-group-addon">원래 비밀번호</span> <input
+								<span class="input-group-addon">Password</span> <input
 									type="password" id='signorigin' class="form-control"
 									placeholder="Password" maxlength="20" data-placement="bottom">
 							</div>
 
 							<div class="input-group input-group-lg">
-								<span class="input-group-addon">변경 비밀번호</span> <input
+								<span class="input-group-addon">new Password</span> <input
 									type="password" id='signpassword' class="form-control"
 									placeholder="Password" maxlength="20" data-placement="bottom">
 								<input id='signpasswordconfirm' type="password"

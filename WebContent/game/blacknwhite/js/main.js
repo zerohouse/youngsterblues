@@ -21,61 +21,6 @@
 
 
 
-    function statusChangeCallback(response) {
-        if (response.status === 'connected') {
-	    fbConnected();
-        }
-    }
-
-    var statuslogin = false;
-
-    function checkLoginState() {
-        FB.getLoginStatus(function(response) {
-            statusChangeCallback(response);
-        });
-    }
-
-    window.fbAsyncInit = function() {
-        FB.init({
-            appId      : '508840425919832',
-            cookie     : true,  // enable cookies to allow the server to access
-                                // the session
-            xfbml      : true,  // parse social plugins on this page
-            version    : 'v2.1' // use version 2.1
-        });
-
-        FB.getLoginStatus(function(response) {
-            statusChangeCallback(response);
-        });
-
-        FB.Event.subscribe('auth.statusChange', function(){checkLoginState();});
-    };
-
-    (function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/en_US/sdk.js";
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-
-    function fbConnected() {
-	if(statuslogin)
-	return;        
-	
-	statuslogin = true;
-	console.log('Welcome!  Fetching your information.... ');
-        FB.api('/me', function(response) {
-            login(response.id, response.name);
-        });
-    }
-
-
-
-
-
-
-
 
     var socket;
     var game;
@@ -85,18 +30,17 @@
     }
     
 
-function login(fbid, fbname){
+function login(id, name){
 
     status('로그인 되었습니다.');
     status('현재 접속자 창에서 다른 사용자의 이름을 눌러 대결을 신청해 보세요.');
 
-    socket = io.connect('http://localhost:8000');
-    game = {usablePoint : 99, round:1, rival: "", myid: fbid, ing:false};
+    socket = io.connect('http://54.65.20.191:8000');
+    game = {usablePoint : 99, round:1, rival: "", myid: id, ing:false};
 
-    $('#logintitle').text(fbname);
+    $('#logintitle').text(name);
     $('#logincontents').empty();
     $('#gamewin').show();
-    $('#fblogin').hide(500);
 
     var warringhtml = "<font size='6'><br></font>흑과백2<br><font size='4'>게임을 시작하려면 접속자 목록에서<br> 게임하실분의 이름을 눌러주세요.</font>";
 
@@ -105,7 +49,7 @@ function login(fbid, fbname){
     });
 
     socket.on('connect', function(){
-        socket.emit('adduser', game.myid, fbname);
+        socket.emit('adduser', game.myid, name);
     });
 
     socket.on('updatechat', function (username, data, whisper) {

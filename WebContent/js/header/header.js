@@ -1,6 +1,12 @@
 /**
  * 헤더자바스크립트
  */
+
+$().showUp('.navbar', {
+	upClass : 'navbar-show',
+	downClass : 'navbar-hide'
+});
+
 (function() {
 
 	var errorMessage = $('#errorMessage');
@@ -11,13 +17,12 @@
 	$('#signup').click(function() {
 		location.href = "/signup.jsp";
 	});
-	
-	$('#password').keypress(function (e){
-		if(e.which == 13)
+
+	$('#password').keypress(function(e) {
+		if (e.which == 13)
 			loginbtn.click();
 	});
 
-	
 	var loginbtn = $('#loginsubmit');
 	loginbtn.click(function() {
 		var id = $('#id').val();
@@ -28,7 +33,7 @@
 			return;
 		}
 		$.ajax({
-			url : "users/login",
+			url : "/users/login",
 			type : "POST",
 			data : {
 				id : id,

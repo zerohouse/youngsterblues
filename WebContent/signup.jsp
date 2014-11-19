@@ -13,10 +13,6 @@
 <body>
 
 	<%@ include file="/components/_header.jspf"%>
-	<br>
-	<br>
-	<br>
-	<br>
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">

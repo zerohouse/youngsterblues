@@ -8,11 +8,11 @@
 <c:if test="${not empty sessionScope.user}">
 	<c:redirect url="usermodify.jsp" />
 </c:if>
-<%@ include file="components/_css.jspf"%>
+<%@ include file="/components/_css.jspf"%>
 </head>
 <body>
 
-	<%@ include file="components/_header.jspf"%>
+	<%@ include file="/components/_header.jspf"%>
 	<br>
 	<br>
 	<br>
@@ -54,7 +54,7 @@
 		</div>
 	</div>
 
-	<%@ include file="components/_imports.jspf"%>
-	<script src="js/signup/signup.js"></script>
+	<%@ include file="/components/_imports.jspf"%>
+	<script src="/js/signup/signup.js"></script>
 </body>
 </html>

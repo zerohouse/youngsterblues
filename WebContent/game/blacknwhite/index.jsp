@@ -1,20 +1,27 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<%@ include file="/components/_css.jspf"%>
+
     <meta charset="utf-8"/>
     <meta name="viewport" content="initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="css/main.css"/>
     <script src="/socket.io/socket.io.js"></script>
 </head>
 <body>
+
+	<%@ include file="/components/_header.jspf"%>
 <div id="fb-root"></div>
-    <div id='menu'>
+    <ul id='menu'>
         <li id="conlogin">로그인</li>
         <li id="conusercon">현재 접속자</li>
         <li id="conchat">채팅</li>
         <li id="constatuscon">상태메시지</li>
         <li id="congameContainer">흑과백2</li>
         <li id="congameinfo">게임방법</li>
-    </div>
+    </ul>
 
     <div class='foot' id="login">
         <div class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="true" data-auto-logout-link="false"></div>
@@ -104,8 +111,7 @@
     position:absolute;
 "></iframe><br>
 </div>
-
-<script src="js/jquery.js"></script>
+	<%@ include file="/components/_imports.jspf"%>
 <script src="js/jquery-ui.min.js"></script>
 <script src="js/main.js"></script>
 

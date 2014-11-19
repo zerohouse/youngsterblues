@@ -4,11 +4,11 @@
 <html>
 <head>
 <title>젊음 - Blues</title>
-<%@ include file="components/_css.jspf"%>
+<%@ include file="/components/_css.jspf"%>
 </head>
 <body>
 
-	<%@ include file="components/_header.jspf"%>
+	<%@ include file="/components/_header.jspf"%>
 	<!-- Main jumbotron for a primary marketing message or call to action -->
 	<div class="jumbotron">
 		<div class="container">
@@ -70,6 +70,6 @@
 	<!-- Bootstrap core JavaScript
     ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
-	<%@ include file="components/_imports.jspf"%>
+	<%@ include file="/components/_imports.jspf"%>
 </body>
 </html>

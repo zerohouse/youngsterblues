@@ -2,13 +2,16 @@
 
 @import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
 
-body, h1, h2, h3, h4, h5, h6 {
-	padding-top: 50px;
+body {
+	padding-top: 40px;
     font-family: 'Nanum Gothic', serif;
+}
+h1, h2, h3, h4, h5, h6 {
+	font-family: 'Nanum Gothic', serif;
 }
 
 .input-group-addon {
-	min-width: 120px;
+	min-width: 145px;
 }
 
 .input-group {

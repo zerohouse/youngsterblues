@@ -1,0 +1,102 @@
+@CHARSET "UTF-8";
+
+
+#chess{
+	height:inherit;
+	text-align:center;
+}
+
+
+#chess > ul{
+	width:400px;
+	height:400px;
+	list-style:none;
+	display:inline-block;
+
+}
+
+#chess li{
+	overflow:hidden;
+	border:1px dotted #eee;
+	border-radius:
+	padding:0;
+	margin:0;
+	display:inline-block;
+	width:100px;
+	height:100px;
+}
+
+
+
+#chess > ul > div {
+	width:100%;
+}
+
+#chess > ul > div .panel-body {
+	height:150px;
+}
+
+.dies{
+	padding:0;
+}
+
+
+
+.pig, .tiger, .dragon, .snake, .dog, .snake-reverse, .dragon-reverse{
+	background-image:url('animal.png');
+	background-size:100%;
+	background-repeat:no-repeat;
+}
+
+.pig{
+	background-position:0px -373px;
+}
+
+.tiger{
+	background-position:0px 3px;
+}
+
+.dragon{
+	background-position:0px -92px;
+}
+
+.dragon-reverse{
+	background-position:0px -568px;
+}
+
+.snake{
+	background-position:0px -187px;
+}
+
+.snake-reverse{
+	background-position:0px -471px;
+}
+
+.dog{
+	background-position:0px -278px;
+}
+
+.guide{
+	width:100%;
+	height:100%;
+	border-radius:50%;
+	background-color:#ccf;
+	opacity:0.4;
+	border:2px dotted #000;
+}
+
+.reborn{
+	width:100%;
+	height:100%;
+	border-radius:50%;
+	background-color:#cfc;
+	opacity:0.4;
+	border:2px dotted #000;
+}
+
+#startbtn{
+	float:right;
+	margin-top:10px;
+	margin-left:20px;
+	font-size:20px;
+}

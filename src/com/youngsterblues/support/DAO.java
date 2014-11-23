@@ -9,20 +9,17 @@ import java.util.ArrayList;
 
 public class DAO {
 	public Connection getConnection() {
+		Connection con = null;
 		String url = "jdbc:mysql://54.65.20.191:3306/youngster?useUnicode=true&characterEncoding=utf8";
 		String id = "youngster";
 		String pw = "qkrtjdgh1";
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			Connection con = DriverManager.getConnection(url, id, pw);
-			return con;
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
+			con = DriverManager.getConnection(url, id, pw);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		return null;
+		return con;
 	}
 
 	public boolean executeQuery(String sql, ArrayList<Object> parameters) {

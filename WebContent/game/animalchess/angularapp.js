@@ -58,6 +58,7 @@ var move = function(die, ongame, mydie, yourdie) {
 		ongame[chess.moving] = animal('dragon', ongame[chess.moving].my);
 	if (ongame[died].animal != 'empty') {
 		ongame[died].guide = false;
+		ongame[died].my = true;
 		mydie.push(ongame[died]);
 	}
 	ongame[died] = ongame[chess.moving];
@@ -67,18 +68,20 @@ var move = function(die, ongame, mydie, yourdie) {
 }
 
 function gameEnd(isWin) {
+	if (!chess.ongame)
+		return;
 	var alertTo = $('#alertTo');
 	if (isWin) {
 		alertTo.text('승리');
 		socket.emit('game', {
 			type : 'youlose'
 		});
-	} else{
+	} else {
 		alertTo.text('패배');
 	}
 	alertTo.unbind('click');
-	alertTo.show('pulsate',500);
-	setTimeout(function(){
+	alertTo.show('pulsate', 500);
+	setTimeout(function() {
 		location.reload();
 	}, 5000);
 }
@@ -158,6 +161,7 @@ var chess = {
 		return angular.element($('#chesspan')).scope()
 	}
 };
+
 var animal = function(animal, my) {
 	var name;
 	var direction = [ true, true, true, true, false, true, true, true, true ];

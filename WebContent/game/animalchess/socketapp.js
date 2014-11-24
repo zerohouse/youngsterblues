@@ -33,7 +33,6 @@ socket.on('join', function(success, roomdata) {
 	if (roomdata == undefined)
 		return;
 	var scop = angular.element($('#roomdata')).scope();
-	console.log(roomdata);
 	if (roomdata.roomid == 'square') {
 		chess.show = false;
 	} else {

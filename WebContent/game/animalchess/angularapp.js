@@ -53,7 +53,7 @@ var move = function(die, ongame, mydie, yourdie) {
 	}
 	// 이동
 	if (ongame[died].animal == 'tiger')
-		gameWin();
+		gameEnd(true);
 	if (ongame[chess.moving].animal == 'snake' && died <= 2)
 		ongame[chess.moving] = animal('dragon', ongame[chess.moving].my);
 	if (ongame[died].animal != 'empty') {

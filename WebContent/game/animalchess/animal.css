@@ -42,25 +42,35 @@
 
 
 
-.pig, .tiger, .dragon, .snake, .dog, .snake-reverse, .dragon-reverse{
+.pig, .tiger, .dragon, .snake, .dog{
 	background-image:url('animal.png');
 	background-size:100%;
 	background-repeat:no-repeat;
 }
 
-.pig{
+.pig-enemy, .tiger-enemy, .dragon-enemy, .snake-enemy, .dog-enemy{
+	background-image:url('animal-enemy.png');
+	background-size:100%;
+	background-repeat:no-repeat;
+}
+
+.pig, .pig-enemy{
 	background-position:0px -373px;
 }
 
-.tiger{
+.tiger, .tiger-enemy{
 	background-position:0px 3px;
+}
+
+.dog, .dog-enemy{
+	background-position:0px -278px;
 }
 
 .dragon{
 	background-position:0px -92px;
 }
 
-.dragon-reverse{
+.dragon-enemy{
 	background-position:0px -568px;
 }
 
@@ -68,13 +78,14 @@
 	background-position:0px -187px;
 }
 
-.snake-reverse{
+.snake-enemy{
 	background-position:0px -471px;
 }
 
-.dog{
-	background-position:0px -278px;
-}
+
+
+
+
 
 .guide{
 	width:100%;
@@ -95,8 +106,18 @@
 }
 
 #startbtn{
-	float:right;
-	margin-top:10px;
-	margin-left:20px;
+	left:50px;
+	top:50px;
 	font-size:20px;
+	position:absolute;
+}
+
+#alertTo{
+	padding-top:120px;
+	width:100%;
+	height:100%;
+	position:absolute;
+	text-align:center;
+	background-color:rgba(255, 255, 255, 0.6);
+	font-size:80px;
 }

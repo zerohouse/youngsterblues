@@ -18,9 +18,11 @@
 	</div>
 
 	<div class="container">
-		<div id='chesspan' class="row"  ng-controller='chess' ng-show='show()'>
+		<div id='chesspan' class="row" ng-controller='chess' ng-show='show()'>
 			<div class="col-md-12">
 				<div class='panel panel-default'>
+					<div id='alertTo'></div>
+
 					<div class='panel-heading'>동물장기</div>
 
 					<div id='chess' class='panel-body chess'>

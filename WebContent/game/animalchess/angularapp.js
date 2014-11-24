@@ -36,17 +36,20 @@ app.controller('roomdata', [ '$scope', function($scope) {
 
 var move = function(die, ongame, mydie, yourdie) {
 	if (!chess.ongame) {
-		error('게임을 시작되지 않았어요.');
+		alertToScreen('게임을 시작되지 않았어요.');
 		return;
 	}
 	if (!chess.myturn) {
-		error('상대방의 턴입니다.');
+		alertToScreen('상대방의 턴입니다.');
 		return;
 	}
 	var died = ongame.indexOf(die);
 	if (ongame[chess.moving].my == ongame[died].my) {
-		error('내 말 위로는 못가요');
+		alertToScreen('내 말 위로는 못가요');
 		return;
+	}
+	if (ongame[chess.moving].animal == 'tiger' && died < 4) {
+		chess.tigerInWin = true;
 	}
 	// 이동
 	if (ongame[died].animal == 'tiger')
@@ -65,12 +68,29 @@ var move = function(die, ongame, mydie, yourdie) {
 
 function gameWin() {
 	alert('게임에서 승리하였습니다.');
+	alertToScreen('승리!!');
+	socket.emit('game', {
+		type : 'youlose'
+	});
 }
 
-function error(message) {
+function alertToScreen(message) {
+	var alertTo = $('#alertTo');
+	if (alertTo.css('display') == 'block') {
+		alertTo.html(alertTo.text() + "<br>" + message);
+	} else {
+		alertTo.text(message);
+	}
+	alertTo.show('drop', 500);
+	setTimeout(function() {
+		alertTo.hide('drop', 500);
+	}, 2000);
 	chat({
 		chat : message,
 		time : getNow()
+	});
+	alertTo.click(function() {
+		alertTo.hide();
 	});
 }
 
@@ -96,11 +116,11 @@ var empty = function() {
 		direction : '',
 		rebornTo : function(ongame, mydie) {
 			if (!chess.ongame) {
-				error('게임을 시작되지 않았어요.');
+				alertToScreen('게임을 시작되지 않았어요.');
 				return;
 			}
 			if (!chess.myturn) {
-				error('상대방의 턴입니다.');
+				alertToScreen('상대방의 턴입니다.');
 				return;
 			}
 			var index = ongame.indexOf(result);
@@ -172,21 +192,25 @@ var animal = function(animal, my) {
 	}
 	var result = {
 		getClass : function() {
-			if ((result.animal == 'snake' || result.animal == 'dragon')
-					&& !result.my)
-				return result.animal + '-reverse';
+			if (!result.my)
+				return result.animal + '-enemy';
 			return result.animal;
 		},
 		moveAble : function(data) {
 			if (!chess.ongame) {
-				error('게임을 시작되지 않았어요.');
+				alertToScreen('게임을 시작되지 않았어요.');
 				return;
 			}
 			if (!chess.myturn) {
-				error('상대방의 턴입니다.');
+				alertToScreen('상대방의 턴입니다.');
 				return;
 			}
 			hideGuideReborn(data);
+			if (chess.showGuides) {
+				chess.showGuides = false;
+				return;
+			}
+			chess.showGuides = true;
 			var pos = data.indexOf(result);
 			for (var i = 0; i < 9; i++) {
 				var dx = i - 4;
@@ -230,11 +254,11 @@ app.controller('chess', [
 			$scope.mydie = [];
 			$scope.reborn = function(data, animal) {
 				if (!chess.ongame) {
-					error('게임을 시작되지 않았어요.');
+					alertToScreen('게임을 시작되지 않았어요.');
 					return;
 				}
 				if (!chess.myturn) {
-					error('상대방의 턴입니다.');
+					alertToScreen('상대방의 턴입니다.');
 					return;
 				}
 				hideGuideReborn(data);

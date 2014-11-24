@@ -4,24 +4,26 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
--- -----------------------------------------------------
+--  -----------------------------------------------------
 -- Schema youngster
 -- -----------------------------------------------------
 
+-- -----------------------------------------------------
+-- Schema youngster
+-- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `youngster` DEFAULT CHARACTER SET utf8 ;
-USE `youngster` ;
+USE `mydb` ;
 
 -- -----------------------------------------------------
--- Table `youngster`.`contents`
+-- Table `mydb`.`freeboard`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `youngster`.`contents` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `type` VARCHAR(45) NOT NULL,
-  `userid` VARCHAR(45) NOT NULL,
+CREATE TABLE IF NOT EXISTS `mydb`.`freeboard` (
+  `id` INT NOT NULL,
+  `user` VARCHAR(45) NOT NULL,
   `head` VARCHAR(45) NOT NULL,
   `contents` VARCHAR(45) NOT NULL,
   `timestamp` DATETIME NOT NULL,
-  PRIMARY KEY (`id`, `type`))
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 USE `youngster` ;
@@ -29,7 +31,6 @@ USE `youngster` ;
 -- -----------------------------------------------------
 -- Table `youngster`.`user`
 -- -----------------------------------------------------
-
 CREATE TABLE IF NOT EXISTS `youngster`.`user` (
   `id` VARCHAR(45) NOT NULL,
   `password` VARCHAR(45) NOT NULL,

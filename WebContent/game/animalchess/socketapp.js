@@ -12,7 +12,7 @@ socket.on('chat', function(data) {
 	chat(data);
 });
 
-function chat(data){
+function chat(data) {
 	var scop = angular.element($('#chatword')).scope();
 	scop.chats.push(data);
 	scop.$apply();
@@ -96,8 +96,10 @@ startbtn.click(function() {
 		});
 		startbtn.hide();
 		chess.ongame = true;
+		alertToScreen('레디!');
 		return;
 	}
+	alertToScreen('레디!');
 	socket.emit('game', {
 		type : 'ready'
 	});
@@ -126,9 +128,15 @@ socket.on('game', function(data) {
 		chess.scope().ongame = transfer(data.ongame);
 		chess.scope().$apply();
 		myTurn();
+		if (chess.tigerInWin)
+			gameWin();
 		break;
 	case 'myturn':
-		error('상대방의 턴입니다.');
+		alertToScreen('상대방의 턴입니다.');
+		break;
+	case 'youlose':
+		alert('게임에서 패배하였습니다.');
+		alertToScreen('게임에서 패배하였습니다.');
 		break;
 	}
 
@@ -158,7 +166,7 @@ function transfer(data) {
 }
 
 function myTurn() {
-	error('내 차례!');
+	alertToScreen('내 차례!');
 	chess.myturn = true;
 	socket.emit('game', {
 		type : 'myturn'

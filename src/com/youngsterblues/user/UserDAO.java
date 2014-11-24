@@ -10,10 +10,11 @@ public class UserDAO extends DAO {
 		String sql = "select * from user where id=?";
 		ArrayList<Object> parameters = new ArrayList<Object>();
 		parameters.add(id);
-		ArrayList<String> userString = selectQuery(sql, parameters, 3);
+		ArrayList<Object> userString = selectQuery(sql, parameters, 3);
 		if (userString.size() == 0)
 			return null;
-		return new User(userString.get(0), userString.get(1), userString.get(2));
+		return new User((String) userString.get(0), (String) userString.get(1),
+				(String) userString.get(2));
 	}
 
 	public boolean addDB(User user) {

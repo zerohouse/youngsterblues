@@ -17,24 +17,17 @@ public class UserDAOTest {
 		userdao = new UserDAO();
 	}
 
-	@Test
-	public void test() {
-		User user = userdao.getUser("testuser");
-		
-		System.out.println(user.getName());
-		assertNotNull(user);
-	}
-	
+
 	@Test
 	public void machPasswordTest(){
-		User user = userdao.getUser("testuser");
+		User user = userdao.getUser("zerohouse");
 		assertFalse(user.matchPassword("123"));
-		assertTrue(user.matchPassword("1234"));
+		assertTrue(user.matchPassword("12345"));
 	}
 	
 	@Test
 	public void addDBTest(){
-		User user = new User("testuser4", "1234", "고랑이");
+		User user = new User("tester4", "1234", "고랑이");
 		assertFalse(userdao.addDB(user));
 	}
 

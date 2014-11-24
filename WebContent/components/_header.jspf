@@ -27,14 +27,16 @@
 					<ul class="dropdown-menu">
 						<li><a href="#">전략</a></li>
 						<li><a href="#">승리</a></li>
-						<li><a href="#">자유게시판</a></li>
+						<li><a href="/board/free/">자유게시판</a></li>
 					</ul></li>
 
 				<c:choose>
 					<c:when test="${not empty sessionScope.user}">
-					<input type='hidden' id='userId' value="<c:out value="${sessionScope.user.id}"/>">
-					<input type='hidden' id='userName' value="<c:out value="${sessionScope.user.name}"/>">
-	
+						<input type='hidden' id='userId'
+							value="<c:out value="${sessionScope.user.id}"/>">
+						<input type='hidden' id='userName'
+							value="<c:out value="${sessionScope.user.name}"/>">
+
 						<li><a href="/usermodify.jsp">마이페이지</a></li>
 			</ul>
 			<form class="navbar-form navbar-right">
@@ -42,6 +44,7 @@
 			</form>
 			</c:when>
 			<c:otherwise>
+
 				</ul>
 				<form class="navbar-form navbar-right">
 					<div class="form-group">
@@ -56,6 +59,10 @@
 						class='btn btn-danger'></div>
 					<div id='signup' class="btn btn-info">Sign up</div>
 				</form>
+				<script>
+					if (document.URL.split('/').length > 4)
+						location.href = '/';
+				</script>
 			</c:otherwise>
 			</c:choose>
 

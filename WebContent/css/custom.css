@@ -4,8 +4,9 @@
 
 body {
 	padding-top: 40px;
-    font-family: 'Nanum Gothic', serif;
+	font-family: 'Nanum Gothic', serif;
 }
+
 h1, h2, h3, h4, h5, h6 {
 	font-family: 'Nanum Gothic', serif;
 }
@@ -21,4 +22,8 @@ h1, h2, h3, h4, h5, h6 {
 
 #signupbtn {
 	width: 100%;
+}
+
+.modal {
+	top: 100px;
 }

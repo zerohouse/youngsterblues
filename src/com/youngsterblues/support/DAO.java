@@ -5,7 +5,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class DAO {
 	public Connection getConnection() {
@@ -25,16 +27,21 @@ public class DAO {
 	public boolean executeQuery(String sql, ArrayList<Object> parameters) {
 		PreparedStatement pstmt = null;
 		Connection conn = null;
+		Date date;
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
+			
 
 			for (int i = 0; i < parameters.size(); i++) {
 				if (parameters.get(i) instanceof String) {
 					pstmt.setString(i + 1, (String) parameters.get(i));
 				} else if (parameters.get(i) instanceof Integer) {
 					pstmt.setInt(i + 1, (Integer) parameters.get(i));
-				}
+				} else if (parameters.get(i) instanceof Date) {
+					date = (Date) parameters.get(i);
+					pstmt.setTimestamp(i + 1, new Timestamp(date.getTime()));
+				} 
 			}
 			pstmt.execute();
 			return true;
@@ -57,12 +64,12 @@ public class DAO {
 		return false;
 	}
 
-	public ArrayList<String> selectQuery(String sql,
+	public ArrayList<Object> selectQuery(String sql,
 			ArrayList<Object> parameters, int resultSetLength) {
 		PreparedStatement pstmt = null;
 		Connection conn = null;
 		ResultSet rs = null;
-		ArrayList<String> result = new ArrayList<String>();
+		ArrayList<Object> result = new ArrayList<Object>();
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -78,7 +85,7 @@ public class DAO {
 
 			while (rs.next()) {
 				for (int i = 0; i < resultSetLength; i++) {
-					result.add(rs.getString(i + 1));
+					result.add(rs.getObject(i + 1));
 				}
 			}
 

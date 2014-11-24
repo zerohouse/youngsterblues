@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
+import com.youngsterblues.support.State;
 
 @SuppressWarnings("serial")
 @WebServlet("/users/login")
@@ -28,20 +28,19 @@ public class LoginServlet extends HttpServlet {
 		User user = userdao.getUser(id);
 
 		State state = new State();
-		Gson gson = new Gson();
 		
 		if (user == null) {
 			state.setState(false, "사용자가 없습니다.");
-			resp.getWriter().write(gson.toJson(state));
+			resp.getWriter().write(state.toJson());
 			return;
 		}
 		if (!user.matchPassword(password)) {
 			state.setState(false, "비밀번호가 맞지 않습니다.");
-			resp.getWriter().write(gson.toJson(state));
+			resp.getWriter().write(state.toJson());
 			return;
 		}
 		state.setState(true, null);
-		resp.getWriter().write(gson.toJson(state));
+		resp.getWriter().write(state.toJson());
 		req.getSession().setAttribute("user", user);
 	}
 

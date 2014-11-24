@@ -150,7 +150,6 @@
 
 
 	<%@ include file="/components/_imports.jspf"%>
-	<script src="/plugin/angular/angular.js"></script>
 	<script src="/socket.io/socket.io.js"></script>
 	<script src="angularapp.js"></script>
 	<script src="socketapp.js"></script>

@@ -78,6 +78,9 @@ function gameEnd(isWin) {
 	}
 	alertTo.unbind('click');
 	alertTo.show('pulsate',500);
+	setTimeout(function(){
+		location.reload();
+	}, 5000);
 }
 
 function alertToScreen(message) {

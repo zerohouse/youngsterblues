@@ -66,12 +66,18 @@ var move = function(die, ongame, mydie, yourdie) {
 	turnOver();
 }
 
-function gameWin() {
-	alert('게임에서 승리하였습니다.');
-	alertToScreen('승리!!');
-	socket.emit('game', {
-		type : 'youlose'
-	});
+function gameEnd(isWin) {
+	var alertTo = $('#alertTo');
+	if (isWin) {
+		alertTo.text('승리');
+		socket.emit('game', {
+			type : 'youlose'
+		});
+	} else{
+		alertTo.text('패배');
+	}
+	alertTo.unbind('click');
+	alertTo.show('pulsate',500);
 }
 
 function alertToScreen(message) {

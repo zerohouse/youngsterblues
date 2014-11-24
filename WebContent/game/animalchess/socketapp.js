@@ -129,14 +129,13 @@ socket.on('game', function(data) {
 		chess.scope().$apply();
 		myTurn();
 		if (chess.tigerInWin)
-			gameWin();
+			gameEnd(true);
 		break;
 	case 'myturn':
 		alertToScreen('상대방의 턴입니다.');
 		break;
 	case 'youlose':
-		alert('게임에서 패배하였습니다.');
-		alertToScreen('게임에서 패배하였습니다.');
+		gameEnd(false);
 		break;
 	}
 

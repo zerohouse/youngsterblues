@@ -6,13 +6,13 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Youngster Blues - 자유게시판</title>
 <%@ include file="/components/_css.jspf"%>
-<link rel='stylesheet' href='board.css'>
+<link rel='stylesheet' href='/support/board/board.css'>
 </head>
-<body ng-app='board'>
+<body ng-app='boardapp'>
 	<%@ include file="/components/_header.jspf"%>
 
 
-	<div class='container' id='free' ng-controller="free">
+	<div class='container' id='board' ng-controller="board">
 		<div class='row'>
 			<div class='col-md-12'>
 				<div class='jumbotron'>
@@ -53,7 +53,7 @@
 				<button class='btn btn-primary' data-toggle="modal"
 					data-target="#writearticle">글쓰기</button>
 			</div>
-
+			
 		</div>
 
 		<!-- Modal -->
@@ -78,7 +78,8 @@
 
 					</div>
 					<div class="modal-footer">
-						<div class="btn btn-primary" ng-show="isMine(content.userId)" ng-click="deleteContent(content.id)">삭제</div>
+						<div class="btn btn-primary" ng-show="isMine(content.userId)"
+							ng-click="deleteContent(content.id)">삭제</div>
 						<div class="btn btn-success" ng-show="isMine(content.userId)">수정</div>
 
 						<div class="btn btn-default" data-dismiss="modal">닫기</div>
@@ -122,7 +123,19 @@
 	</div>
 	<%@ include file="/components/_imports.jspf"%>
 	<script src='/plugin/jquery/jquery.autosize.min.js'></script>
-	<script src='board.js'></script>
+	<script>
+	var type = '${type}';
+	var content = '${content}';
+	$(document).ready(function() {
+		$('textarea').autosize();
+		if(content=='')
+			return;
+		angular.element($('#board')).scope().getContent(content);
+		
+	});
+
+	</script>
+	<script src='/support/board/board.js'></script>
 </body>
 
 </html>

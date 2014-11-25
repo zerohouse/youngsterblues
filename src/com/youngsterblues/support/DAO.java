@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -24,6 +26,17 @@ public class DAO {
 		return con;
 	}
 
+	public Date parseDate(Object object) {
+		SimpleDateFormat datetime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date date = null;
+		try {
+			date = datetime.parse(object.toString());
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return date;
+	}
+
 	public boolean executeQuery(String sql, ArrayList<Object> parameters) {
 		PreparedStatement pstmt = null;
 		Connection conn = null;
@@ -31,7 +44,6 @@ public class DAO {
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
-			
 
 			for (int i = 0; i < parameters.size(); i++) {
 				if (parameters.get(i) instanceof String) {
@@ -41,7 +53,7 @@ public class DAO {
 				} else if (parameters.get(i) instanceof Date) {
 					date = (Date) parameters.get(i);
 					pstmt.setTimestamp(i + 1, new Timestamp(date.getTime()));
-				} 
+				}
 			}
 			pstmt.execute();
 			return true;

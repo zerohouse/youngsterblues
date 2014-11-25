@@ -5,5 +5,5 @@
 <script src="/plugin/bootstrap/bootstrap.min.js"></script>
 <script src="/plugin/bootstrap/bootstrap-tooltip.js"></script>
 <script src="/plugin/showup/showup.js"></script>
-<script src="/js/header/header.js"></script>
 <script src="/plugin/angular/angular.js"></script>
+<script src="/support/header/header.js"></script>

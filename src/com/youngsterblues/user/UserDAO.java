@@ -4,13 +4,19 @@ import java.util.ArrayList;
 
 import com.youngsterblues.support.DAO;
 
-public class UserDAO extends DAO {
+public class UserDAO {
+
+	DAO dao;
+
+	public UserDAO() {
+		dao = new DAO();
+	}
 
 	public User getUser(String id) {
 		String sql = "select * from user where id=?";
 		ArrayList<Object> parameters = new ArrayList<Object>();
 		parameters.add(id);
-		ArrayList<Object> userString = selectQuery(sql, parameters, 3);
+		ArrayList<Object> userString = dao.selectQuery(sql, parameters, 3);
 		if (userString.size() == 0)
 			return null;
 		return new User((String) userString.get(0), (String) userString.get(1),
@@ -23,7 +29,7 @@ public class UserDAO extends DAO {
 		parameters.add(user.getId());
 		parameters.add(user.getPassword());
 		parameters.add(user.getName());
-		return executeQuery(sql, parameters);
+		return dao.executeQuery(sql, parameters);
 	}
 
 	public boolean updateDB(User user) {
@@ -38,6 +44,6 @@ public class UserDAO extends DAO {
 		parameters.add(name);
 		parameters.add(password);
 		parameters.add(user.getId());
-		return executeQuery(sql, parameters);
+		return dao.executeQuery(sql, parameters);
 	}
 }

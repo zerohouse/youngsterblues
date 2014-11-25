@@ -1,11 +1,10 @@
 /**
  * 
  */
-$(document).ready(function() {
-	$('textarea').autosize();
-});
-var app = angular.module('board', []);
+
+var app = angular.module('boardapp', []);
 var contentview = $('#contentview');
+
 function dataTransfer(obj) {
 	var str = [];
 	for ( var p in obj)
@@ -13,7 +12,9 @@ function dataTransfer(obj) {
 	return str.join("&");
 }
 
-app.controller('free', [ '$scope', '$http', function($scope, $http) {
+ 
+
+app.controller('board', [ '$scope', '$http', function($scope, $http) {
 
 	$http({
 		method : 'POST',
@@ -23,7 +24,7 @@ app.controller('free', [ '$scope', '$http', function($scope, $http) {
 		},
 		transformRequest : dataTransfer,
 		data : {
-			type : 'free'
+			type : type
 		}
 	}).success(function(result) {
 		$scope.contents = result;
@@ -63,7 +64,7 @@ app.controller('free', [ '$scope', '$http', function($scope, $http) {
 				id : $('#userId').val(),
 				content : $scope.addcontent.content,
 				head : $scope.addcontent.head,
-				type : 'free'
+				type : type
 			}
 		}).success(function(data) {
 			if (data.state)

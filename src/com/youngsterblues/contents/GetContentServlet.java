@@ -29,6 +29,7 @@ public class GetContentServlet extends HttpServlet {
 		} catch (Exception e) {
 			resp.getWriter().write("null");
 		}
+
 	}
 
 }

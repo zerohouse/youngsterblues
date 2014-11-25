@@ -102,10 +102,10 @@
 						<button type="button" class="close" data-dismiss="modal">
 							<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
 						</button>
-						<h4 class="modal-title">
+						<h2 class="modal-title">
 							<input type='text' class="form-control" placeholder='제목'
 								ng-model="addcontent.head" />
-						</h4>
+						</h2>
 						<h5>
 							<span class='glyphicon glyphicon-user'></span>
 							<c:out value="${sessionScope.user.id}" />

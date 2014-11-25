@@ -136,6 +136,9 @@ socket.on('game', function(data) {
 	case 'youlose':
 		gameEnd(false);
 		break;
+	case 'youwin':
+		gameEnd(true);
+		break;
 	}
 
 });

@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Youngster Blues - 자유게시판</title>
 <%@ include file="/components/_css.jspf"%>
 </head>
 <body ng-app='board'>

@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>동물장기</title>
 <%@ include file="/components/_css.jspf"%>
 <link rel='stylesheet' href='chat.css'>
 <link rel='stylesheet' href='animal.css'>

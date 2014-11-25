@@ -6,6 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Youngster Blues - 자유게시판</title>
 <%@ include file="/components/_css.jspf"%>
+<link rel='stylesheet' href='board.css'>
 </head>
 <body ng-app='board'>
 	<%@ include file="/components/_header.jspf"%>
@@ -115,7 +116,7 @@
 
 	</div>
 	<%@ include file="/components/_imports.jspf"%>
-	<script src='jquery.autosize.min.js'></script>
+	<script src='/plugin/jquery/jquery.autosize.min.js'></script>
 	<script src='board.js'></script>
 </body>
 

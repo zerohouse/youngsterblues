@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>젊음 - Blues</title>
+<title>젊은 날의 부르스 - YoungsterBlues</title>
 <%@ include file="/components/_css.jspf"%>
 </head>
 <body>

@@ -12,8 +12,6 @@ function dataTransfer(obj) {
 	return str.join("&");
 }
 
- 
-
 app.controller('board', [ '$scope', '$http', function($scope, $http) {
 
 	$http({
@@ -46,6 +44,10 @@ app.controller('board', [ '$scope', '$http', function($scope, $http) {
 				id : id
 			}
 		}).success(function(data) {
+			if (data == null) {
+				alert('글이 없네요!?');
+				return;
+			}
 			$scope.content = data;
 			console.log(data);
 			contentview.modal('show');
@@ -71,13 +73,13 @@ app.controller('board', [ '$scope', '$http', function($scope, $http) {
 				location.reload();
 		});
 	}
-	
-	$scope.isMine = function(id){
+
+	$scope.isMine = function(id) {
 		return id == $('#userId').val();
 	}
 
 	$scope.deleteContent = function(contentid) {
-		if(!confirm('삭제하시겠습니까?'))
+		if (!confirm('삭제하시겠습니까?'))
 			return;
 		$http({
 			method : 'POST',

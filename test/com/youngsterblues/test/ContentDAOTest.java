@@ -58,5 +58,11 @@ public class ContentDAOTest {
 		
 	}
 	
+	@Test
+	public void deleteContentTest() {
+		assertTrue(dao.deleteDB(2));
+
+	}
+	
 
 }

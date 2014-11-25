@@ -85,6 +85,13 @@ public class ContentDAO extends DAO {
 		parameters.add(content.getDatetime());
 		return executeQuery(sql, parameters);
 	}
+	
+	public boolean deleteDB(int contentId) {
+		String sql = "delete from contents where id=?";
+		ArrayList<Object> parameters = new ArrayList<Object>();
+		parameters.add(contentId);
+		return executeQuery(sql, parameters);
+	}
 
 	public Content getContent(int id) {
 		Content result = null;
@@ -102,4 +109,5 @@ public class ContentDAO extends DAO {
 		}
 		return result;
 	}
+	
 }

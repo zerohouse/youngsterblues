@@ -70,5 +70,30 @@ app.controller('free', [ '$scope', '$http', function($scope, $http) {
 				location.reload();
 		});
 	}
+	
+	$scope.isMine = function(id){
+		return id == $('#userId').val();
+	}
+
+	$scope.deleteContent = function(contentid) {
+		if(!confirm('삭제하시겠습니까?'))
+			return;
+		$http({
+			method : 'POST',
+			url : '/contents/deletecontent/',
+			headers : {
+				'Content-Type' : 'application/x-www-form-urlencoded'
+			},
+			transformRequest : dataTransfer,
+			data : {
+				id : $('#userId').val(),
+				content : contentid
+			}
+		}).success(function(data) {
+			if (data.state) {
+				location.reload();
+			}
+		});
+	}
 
 } ]);

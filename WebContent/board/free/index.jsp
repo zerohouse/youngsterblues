@@ -78,6 +78,9 @@
 
 					</div>
 					<div class="modal-footer">
+						<div class="btn btn-primary" ng-show="isMine(content.userId)" ng-click="deleteContent(content.id)">삭제</div>
+						<div class="btn btn-success" ng-show="isMine(content.userId)">수정</div>
+
 						<div class="btn btn-default" data-dismiss="modal">닫기</div>
 					</div>
 				</div>
@@ -94,7 +97,8 @@
 							<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
 						</button>
 						<h4 class="modal-title">
-							<input type='text' class="form-control" placeholder='제목' ng-model="addcontent.head" />
+							<input type='text' class="form-control" placeholder='제목'
+								ng-model="addcontent.head" />
 						</h4>
 						<h5>
 							<span class='glyphicon glyphicon-user'></span>
@@ -102,7 +106,8 @@
 						</h5>
 					</div>
 					<div class="modal-body">
-						<textarea  class="form-control" placeholder='내용' ng-model="addcontent.content" ></textarea>
+						<textarea class="form-control" placeholder='내용'
+							ng-model="addcontent.content"></textarea>
 					</div>
 					<div class="modal-footer">
 						<div class="btn btn-primary" ng-click='addContent()'>글쓰기</div>

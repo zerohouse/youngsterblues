@@ -64,5 +64,11 @@ public class ContentDAOTest {
 
 	}
 	
+	@Test
+	public void modContentTest() {
+		assertTrue(dao.modDB("zerohouse", 46, "sssdfgasdfadsfss", "ssdfgsdfasdfdsfgs"));
+
+	}
+	
 
 }

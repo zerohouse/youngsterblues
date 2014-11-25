@@ -53,10 +53,10 @@
 				<button class='btn btn-primary' data-toggle="modal"
 					data-target="#writearticle">글쓰기</button>
 			</div>
-			
+
 		</div>
 
-		<!-- Modal -->
+		<!-- Modal 글본문 -->
 		<div class="modal fade" id="contentview" tabindex="-1" role="dialog"
 			aria-hidden="true">
 			<div class="modal-dialog">
@@ -71,6 +71,10 @@
 							<span class='glyphicon glyphicon-time'></span>
 							{{content.datetime}}
 						</h5>
+						<h6>
+							<span class='glyphicon glyphicon-share'></span> <a
+								href="{{link()}}">{{link()}}</a>
+						</h6>
 					</div>
 					<div class="modal-body">
 
@@ -79,8 +83,9 @@
 					</div>
 					<div class="modal-footer">
 						<div class="btn btn-primary" ng-show="isMine(content.userId)"
-							ng-click="deleteContent(content.id)">삭제</div>
-						<div class="btn btn-success" ng-show="isMine(content.userId)">수정</div>
+							ng-click="deleteContent()">삭제</div>
+						<div class="btn btn-success" ng-show="isMine(content.userId)"
+							ng-click='modContent()'>수정</div>
 
 						<div class="btn btn-default" data-dismiss="modal">닫기</div>
 					</div>
@@ -88,7 +93,7 @@
 			</div>
 		</div>
 
-		<!-- Modal -->
+		<!-- Modal 글쓰기  -->
 		<div class="modal fade" id="writearticle" tabindex="-1" role="dialog"
 			aria-hidden="true">
 			<div class="modal-dialog">
@@ -118,22 +123,51 @@
 			</div>
 		</div>
 
+		<!-- Modal 수정  -->
+		<div class="modal fade" id="modarticle" tabindex="-1" role="dialog"
+			aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+						</button>
+						<h4 class="modal-title">
+							<input type='text' class="form-control" placeholder='제목'
+								ng-model="content.head" value="{{content.head}}" />
+						</h4>
+						<h5>
+							<span class='glyphicon glyphicon-user'></span>
+							<c:out value="${sessionScope.user.id}" />
+						</h5>
+					</div>
+					<div class="modal-body">
+						<textarea class="form-control" placeholder='내용'
+							ng-model="content.content">{{content.content}}</textarea>
+					</div>
+					<div class="modal-footer">
+						<div class="btn btn-primary" ng-click='modContentSubmit()'>수정하기</div>
+						<div class="btn btn-default" data-dismiss="modal">닫기</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
 
 
 	</div>
 	<%@ include file="/components/_imports.jspf"%>
 	<script src='/plugin/jquery/jquery.autosize.min.js'></script>
 	<script>
-	var type = '${type}';
-	var content = '${content}';
-	$(document).ready(function() {
-		$('textarea').autosize();
-		if(content=='')
-			return;
-		angular.element($('#board')).scope().getContent(content);
-		
-	});
+		var type = '${type}';
+		var content = '${content}';
+		$(document).ready(function() {
+			$('textarea').autosize();
+			if (content == '')
+				return;
+			angular.element($('#board')).scope().getContent(content);
 
+		});
 	</script>
 	<script src='/support/board/board.js'></script>
 </body>

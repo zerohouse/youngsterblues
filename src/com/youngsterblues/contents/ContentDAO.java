@@ -93,4 +93,14 @@ public class ContentDAO {
 				dao.parseDate(sq.get(5)));
 	}
 
+	public boolean modDB(String userId, Integer contentId, String head, String content) {
+		String sql = "update contents set head=?, content=? where id=? and userid=?";
+		ArrayList<Object> parameters = new ArrayList<Object>();
+		parameters.add(head);
+		parameters.add(content);
+		parameters.add(contentId);
+		parameters.add(userId);
+		return dao.executeQuery(sql, parameters);
+	}
+
 }

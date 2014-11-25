@@ -5,98 +5,133 @@
 var app = angular.module('boardapp', []);
 var contentview = $('#contentview');
 
-function dataTransfer(obj) {
-	var str = [];
-	for ( var p in obj)
-		str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-	return str.join("&");
-}
-
-app.controller('board', [ '$scope', '$http', function($scope, $http) {
-
-	$http({
-		method : 'POST',
-		url : '/contents/getcontents/',
-		headers : {
-			'Content-Type' : 'application/x-www-form-urlencoded'
-		},
-		transformRequest : dataTransfer,
-		data : {
-			type : type
-		}
-	}).success(function(result) {
-		$scope.contents = result;
-	});
-
-	$scope.contents = [];
-	$scope.content = {};
-	$scope.addcontent = {};
-
-	$scope.getContent = function(id) {
-		$http({
-			method : 'POST',
-			url : '/contents/getcontent/',
-			headers : {
-				'Content-Type' : 'application/x-www-form-urlencoded'
-			},
-			transformRequest : dataTransfer,
-			data : {
-				id : id
+app.controller('board', [
+		'$scope',
+		'$http',
+		function($scope, $http) {
+			
+			$scope.getContents = function() {
+				$.ajax({
+					type : 'POST',
+					headers : {
+						'Content-Type' : 'application/x-www-form-urlencoded'
+					},
+					url : '/contents/getcontents/',
+					dataType : "json",
+					data : {
+						type : type
+					}
+				}).done(function(result) {
+					console.log(result);
+					$scope.contents = result;
+					$scope.$apply();
+				});
 			}
-		}).success(function(data) {
-			if (data == 'null') {
-				alert('글이 없네요!?');
-				return;
-			}
-			$scope.content = data;
-			console.log(data);
-			contentview.modal('show');
-		});
-	}
+			
+			$scope.getContents();
+			$scope.content = {};
+			$scope.addcontent = {};
 
-	$scope.addContent = function() {
-		$http({
-			method : 'POST',
-			url : '/contents/addcontent/',
-			headers : {
-				'Content-Type' : 'application/x-www-form-urlencoded'
-			},
-			transformRequest : dataTransfer,
-			data : {
-				id : $('#userId').val(),
-				content : $scope.addcontent.content,
-				head : $scope.addcontent.head,
-				type : type
+			$scope.link = function() {
+				return 'http://youngsterblues.com/board/' + type + '/'
+						+ $scope.content.id;
 			}
-		}).success(function(data) {
-			if (data.state)
-				location.reload();
-		});
-	}
 
-	$scope.isMine = function(id) {
-		return id == $('#userId').val();
-	}
+			$scope.modContentSubmit = function() {
+				$.ajax({
+					type : 'POST',
+					headers : {
+						'Content-Type' : 'application/x-www-form-urlencoded'
+					},
+					url : '/contents/modcontent/',
+					dataType : "json",
+					data : {
+						id : $scope.content.id,
+						head : $scope.content.head,
+						content : $scope.content.content
+					}
+				}).done(function(result) {
+					if (result.state) {
+						$('#modarticle').modal('hide');
+						contentview.modal('show');
+						$scope.getContents();
+					}
+				});
 
-	$scope.deleteContent = function(contentid) {
-		if (!confirm('삭제하시겠습니까?'))
-			return;
-		$http({
-			method : 'POST',
-			url : '/contents/deletecontent/',
-			headers : {
-				'Content-Type' : 'application/x-www-form-urlencoded'
-			},
-			transformRequest : dataTransfer,
-			data : {
-				id : $('#userId').val(),
-				content : contentid
 			}
-		}).success(function(data) {
-			if (data.state) {
-				location.reload();
-			}
-		});
-	}
 
-} ]);
+			$scope.modContent = function() {
+				$('#modarticle').modal('show');
+				contentview.modal('hide');
+			}
+
+			$scope.getContent = function(id) {
+				$.ajax({
+					type : 'POST',
+					url : '/contents/getcontent/',
+					headers : {
+						'Content-Type' : 'application/x-www-form-urlencoded'
+					},
+					dataType : "json",
+					data : {
+						id : id
+					}
+				}).done(function(data) {
+					if (data == 'null') {
+						alert('글이 없네요!?');
+						return;
+					}
+					$scope.content = data;
+					$scope.$apply();
+					console.log(data);
+					contentview.modal('show');
+				});
+			}
+
+			$scope.addContent = function() {
+				$.ajax({
+					type : 'POST',
+					url : '/contents/addcontent/',
+					headers : {
+						'Content-Type' : 'application/x-www-form-urlencoded'
+					},
+					dataType : "json",
+					data : {
+						id : $('#userId').val(),
+						content : $scope.addcontent.content,
+						head : $scope.addcontent.head,
+						type : type
+					}
+				}).done(function(data) {
+					if (data.state)
+						location.reload();
+				});
+			}
+
+			$scope.isMine = function(id) {
+				return id == $('#userId').val();
+			}
+
+			$scope.deleteContent = function() {
+				if (!confirm('삭제하시겠습니까?'))
+					return;
+				$.ajax({
+					type : 'POST',
+					url : '/contents/deletecontent/',
+					headers : {
+						'Content-Type' : 'application/x-www-form-urlencoded'
+					},
+					dataType : "json",
+					data : {
+						id : $('#userId').val(),
+						content : $scope.content.id
+					}
+				}).done(function(data) {
+					if (data.state) {
+						contentview.modal('hide');
+						$scope.getContents();
+					}
+				});
+			}
+
+		} ]);

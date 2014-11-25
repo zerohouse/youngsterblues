@@ -21,9 +21,14 @@ public class GetContentServlet extends HttpServlet {
 		String id = req.getParameter("id");
 		if (id == null)
 			id = "1";
-		Content content = conDAO.getContent(Integer.parseInt(id));
-		Gson gson = new Gson();
-		resp.getWriter().write(gson.toJson(content));
+		try {
+			int parseId = Integer.parseInt(id);
+			Content content = conDAO.getContent(parseId);
+			Gson gson = new Gson();
+			resp.getWriter().write(gson.toJson(content));
+		} catch (Exception e) {
+			resp.getWriter().write("null");
+		}
 	}
 
 }

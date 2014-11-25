@@ -44,7 +44,7 @@ app.controller('board', [ '$scope', '$http', function($scope, $http) {
 				id : id
 			}
 		}).success(function(data) {
-			if (data == null) {
+			if (data == 'null') {
 				alert('글이 없네요!?');
 				return;
 			}

@@ -19,7 +19,7 @@
 					<ul class="dropdown-menu">
 						<li class="dropdown-header">지니어스 시즌3</li>
 						<li><a href="/game/animalchess">동물장기</a></li>
-						<li><a href="#">흑과백2 (개발중)</a></li>
+						<li><a href="/game/blacknwhite">흑과백2</a></li>
 						<li><a href="#">양면포커 (개발중)</a></li>
 					</ul></li>
 				<li class="dropdown"><a href="#" class="dropdown-toggle"

@@ -9,6 +9,7 @@
 	<c:redirect url="signup.jsp" />
 </c:if>
 <%@ include file="/components/_css.jspf"%>
+<link rel='stylesheet' href="/support/signup.css">
 </head>
 <body>
 

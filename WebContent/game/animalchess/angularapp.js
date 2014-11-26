@@ -34,7 +34,7 @@ app.controller('roomdata', [ '$scope', function($scope) {
 	}
 } ]);
 
-var move = function(die, ongame, mydie, yourdie) {
+var move = function(die, stuff, mydie, yourdie) {
 	if (!chess.ongame) {
 		alertToScreen('게임을 시작되지 않았어요.');
 		return;
@@ -43,33 +43,34 @@ var move = function(die, ongame, mydie, yourdie) {
 		alertToScreen('상대방의 턴입니다.');
 		return;
 	}
-	var died = ongame.indexOf(die);
-	if (ongame[chess.moving].my == ongame[died].my) {
+	var died = stuff.indexOf(die);
+	if (stuff[chess.moving].my == stuff[died].my) {
 		alertToScreen('내 말 위로는 못가요');
 		return;
 	}
-	if (ongame[chess.moving].animal == 'tiger' && died < 4) {
+	if (stuff[chess.moving].animal == 'tiger' && died < 4) {
 		chess.tigerInWin = true;
 	}
 	// 이동
-	if (ongame[died].animal == 'tiger')
+	if (stuff[died].animal == 'tiger')
 		gameEnd(true);
-	if (ongame[chess.moving].animal == 'snake' && died <= 2)
-		ongame[chess.moving] = animal('dragon', ongame[chess.moving].my);
-	if (ongame[died].animal != 'empty') {
-		ongame[died].guide = false;
-		ongame[died].my = true;
-		mydie.push(ongame[died]);
+	if (stuff[chess.moving].animal == 'snake' && died <= 2)
+		stuff[chess.moving] = animal('dragon', stuff[chess.moving].my);
+	if (stuff[died].animal != 'empty') {
+		stuff[died].guide = false;
+		stuff[died].my = true;
+		mydie.push(stuff[died]);
 	}
-	ongame[died] = ongame[chess.moving];
-	ongame[chess.moving] = empty();
-	hideGuideReborn(ongame);
+	stuff[died] = stuff[chess.moving];
+	stuff[chess.moving] = empty();
+	hideGuideReborn(stuff);
 	turnOver();
 }
 
 function gameEnd(isWin) {
 	if (!chess.ongame)
 		return;
+	chess.ongame = false;
 	var alertTo = $('#alertTo');
 	if (isWin) {
 		alertTo.text('승리');
@@ -82,7 +83,7 @@ function gameEnd(isWin) {
 	alertTo.unbind('click');
 	alertTo.show('pulsate', 500);
 	setTimeout(function() {
-		location.reload();
+		chess.scope().reset();
 	}, 5000);
 }
 
@@ -106,10 +107,10 @@ function alertToScreen(message) {
 	});
 }
 
-function hideGuideReborn(ongame) {
-	for (var i = 0; i < ongame.length; i++) {
-		ongame[i].guide = false;
-		ongame[i].reborn = false;
+function hideGuideReborn(stuff) {
+	for (var i = 0; i < stuff.length; i++) {
+		stuff[i].guide = false;
+		stuff[i].reborn = false;
 	}
 }
 
@@ -118,29 +119,29 @@ var empty = function() {
 	var result = {
 		moveAble : function(data) {
 		},
-		move : function(ongame, mydie, yourdie) {
-			move(result, ongame, mydie, yourdie);
+		move : function(stuff, mydie, yourdie) {
+			move(result, stuff, mydie, yourdie);
 		},
 		alive : true,
 		my : false,
 		animal : 'empty',
 		name : '',
 		direction : '',
-		rebornTo : function(ongame, mydie) {
+		rebornTo : function(stuff, mydie) {
 			if (!chess.ongame) {
-				alertToScreen('게임을 시작되지 않았어요.');
+				alertToScreen('게임이 시작되지 않았어요.');
 				return;
 			}
 			if (!chess.myturn) {
 				alertToScreen('상대방의 턴입니다.');
 				return;
 			}
-			var index = ongame.indexOf(result);
+			var index = stuff.indexOf(result);
 			var myindex = mydie.indexOf(rebornAnimal);
 			chess.scope().mydie = removeArray(mydie, myindex);
-			ongame[index] = rebornAnimal;
-			ongame[index].my = true;
-			hideGuideReborn(ongame);
+			stuff[index] = rebornAnimal;
+			stuff[index].my = true;
+			hideGuideReborn(stuff);
 			turnOver();
 		}
 	}
@@ -240,8 +241,8 @@ var animal = function(animal, my) {
 				}
 			}
 		},
-		move : function(ongame, mydie, yourdie) {
-			move(result, ongame, mydie, yourdie);
+		move : function(stuff, mydie, yourdie) {
+			move(result, stuff, mydie, yourdie);
 		},
 		alive : true,
 		my : my,
@@ -258,13 +259,25 @@ app.controller('chess', [
 			$scope.show = function() {
 				return chess.show;
 			}
-			$scope.ongame = [ animal('pig', false), animal('tiger', false),
-					animal('dog', false), empty(), animal('snake', false),
-					empty(), empty(), animal('snake', true), empty(),
-					animal('dog', true), animal('tiger', true),
-					animal('pig', true) ];
-			$scope.yourdie = [];
-			$scope.mydie = [];
+			
+			$scope.reset = function() {
+				$scope.yourdie = [];
+				$scope.mydie = [];
+				$scope.stuff = [ animal('pig', false),
+						animal('tiger', false), animal('dog', false), empty(),
+						animal('snake', false), empty(), empty(),
+						animal('snake', true), empty(), animal('dog', true),
+						animal('tiger', true), animal('pig', true) ];
+				chess.ongame = false;
+				chess.ready = false;
+				$('#alertTo').unbind('click');
+				$('#alertTo').show();
+				startbtn.removeClass('btn-success');
+				startbtn.text('Ready');
+				startbtn.show();
+			}
+			$scope.reset();
+
 			$scope.reborn = function(data, animal) {
 				if (!chess.ongame) {
 					alertToScreen('게임을 시작되지 않았어요.');

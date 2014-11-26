@@ -4,58 +4,83 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>동물장기</title>
+<title>흑과백2</title>
 <%@ include file="/components/_css.jspf"%>
 <link rel='stylesheet' href='chat.css'>
 <link rel='stylesheet' href='animal.css'>
 </head>
-<body ng-app="animalchess">
+<body ng-app="blacknwhite">
 	<%@ include file="/components/_header.jspf"%>
 	<div class='jumbotron'>
 		<div class='container'>
-			<h1>동물 장기!</h1>
+			<h1>흑과 백2</h1>
 		</div>
 	</div>
 
 	<div class="container">
-		<div id='chesspan' class="row" ng-controller='chess' ng-show='show()'>
+		<div id='blacknwhitearea' class="row" ng-controller='blacknwhite'
+			ng-show='show()'>
 			<div class="col-md-12">
 				<div class='panel panel-default'>
 					<div id='alertTo'></div>
 
-					<div class='panel-heading'>동물장기</div>
+					<div class='panel-heading'>흑과백2</div>
 
 					<div id='chess' class='panel-body chess'>
-						<ul>
-							<li ng-repeat="animal in stuff"
-								ng-click="animal.moveAble(stuff)" ng-class='animal.getClass()'>
-								<div class='guide' ng-show="animal.guide"
-									ng-click="animal.move(stuff, mydie, yourdie); $event.stopPropagation();"></div>
-								<div class='reborn' ng-show="animal.reborn"
-									ng-click="animal.rebornTo(stuff, mydie); $event.stopPropagation();"></div>
+						<ul class='panel panel-default dies' id='yourdie'>
+							<div class='panel-heading'>상대방</div>
+							<div class='panel-body panel-point'>
+								<h2>
+									라운드 승수 : {{enemy.round}}
+									</h3>
 
-							</li>
-						</ul>
-						<ul>
-							<div>
-								<ul class='panel panel-default dies' id='yourdie'>
-									<div class='panel-heading'>상대방의 동물</div>
-									<div class='panel-body'>
-										<li ng-repeat="animal in yourdie" ng-class='animal.getClass()'></li>
-									</div>
-								</ul>
-							</div>
-							<div>
-								<ul class='panel panel-default dies' id='mydie'>
-									<div class='panel-heading'>나의 동물</div>
-									<div class='panel-body'>
-										<li ng-repeat="animal in mydie"
-											ng-click="reborn(stuff, animal)"
-											ng-class='animal.getClass()'></li>
-									</div>
-								</ul>
+									<ul class="list-group">
+										<li class="list-group-item list-group-item-success"
+											ng-class="{blur:enemy.point<80}"><h4>80~99</h4></li>
+										<li class="list-group-item list-group-item-info"
+											ng-class="{blur:enemy.point<60}"><h4>60~79</h4></li>
+										<li class="list-group-item list-group-item-warning"
+											ng-class="{blur:enemy.point<40}"><h4>40~59</h4></li>
+										<li class="list-group-item list-group-item-danger"
+											ng-class="{blur:enemy.point<20}"><h4>20~39</h4></li>
+										<li class="list-group-item list-group-item-danger"
+											ng-class="{blur:enemy.point<0}"><h4>0~19</h4></li>
+									</ul>
 							</div>
 						</ul>
+						<ul class='panel panel-default dies' id='mydie'>
+							<div class='panel-heading'>나</div>
+							<div class='panel-body panel-point'>
+								<h2>
+									라운드 승수 : {{game.round}} <small>(포인트 : {{game.point}})</small>
+									</h3>
+									<ul class="list-group">
+										<li class="list-group-item list-group-item-success"
+											ng-class="{blur:game.point<80}"><h4>80~99</h4></li>
+										<li class="list-group-item list-group-item-info"
+											ng-class="{blur:game.point<60}"><h4>60~79</h4></li>
+										<li class="list-group-item list-group-item-warning"
+											ng-class="{blur:game.point<40}"><h4>40~59</h4></li>
+										<li class="list-group-item list-group-item-danger"
+											ng-class="{blur:game.point<20}"><h4>20~39</h4></li>
+										<li class="list-group-item list-group-item-danger"
+											ng-class="{blur:game.point<0}"><h4>0~19</h4></li>
+									</ul>
+							</div>
+							<div class='panel-footer'>
+								<div class="input-group input-group-lg">
+									<span class="input-group-addon">포인트</span> <input maxlength="2"
+										type="text" class="form-control" ng-model="submitPoint"
+										placeholder="remain : {{game.point}}" id="submitPoint">
+									<span class="input-group-btn">
+										<button class="btn btn-default" ng-click="submit()"
+											type="button">내기</button>
+									</span>
+								</div>
+							</div>
+						</ul>
+					</div>
+					<div>
 						<div id='startbtn' class='btn btn-primary'>Ready</div>
 					</div>
 				</div>

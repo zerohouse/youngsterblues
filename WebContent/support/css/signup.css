@@ -1,0 +1,9 @@
+@CHARSET "UTF-8";
+
+.input-group-addon {
+	min-width: 145px;
+}
+
+#signupbtn {
+	width: 100%;
+}

@@ -121,10 +121,9 @@ socket.on('game', function(data) {
 		chess.ready = true;
 		break;
 	case 'turnOver':
-		console.log(data);
 		chess.scope().mydie = transferDie(data.yourdie);
 		chess.scope().yourdie = transferDie(data.mydie);
-		chess.scope().ongame = transfer(data.ongame);
+		chess.scope().stuff = transfer(data.stuff);
 		chess.scope().$apply();
 		myTurn();
 		if (chess.tigerInWin)
@@ -167,6 +166,8 @@ function transfer(data) {
 }
 
 function myTurn() {
+	if(!chess.ongame)
+		return;
 	alertToScreen('내 차례!');
 	chess.myturn = true;
 	socket.emit('game', {
@@ -179,7 +180,7 @@ function turnOver() {
 		type : 'turnOver',
 		mydie : chess.scope().mydie,
 		yourdie : chess.scope().yourdie,
-		ongame : chess.scope().ongame
+		stuff : chess.scope().stuff
 	});
 	chess.myturn = false;
 }

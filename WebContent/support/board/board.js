@@ -58,7 +58,7 @@ app
 															+ type
 															+ "/page/"
 															+ (page - 1),
-											disabled : page == 1
+											disabled : page > count/10
 										});
 								for (var i = count; i > 0; i -= 10) {
 									j++;
@@ -80,7 +80,7 @@ app
 															+ type
 															+ "/page/"
 															+ (parseInt(page) + 1),
-											disabled : page == j
+											disabled : page == (parseInt(count/10)+1)
 										});
 
 								$scope.paginations
@@ -90,8 +90,8 @@ app
 													: "http://youngsterblues.com/board/"
 															+ type
 															+ "/page/"
-															+ j,
-											disabled : page == j
+															+ (parseInt(count/10)+1),
+											disabled : page == (parseInt(count/10)+1)
 										});
 
 							};

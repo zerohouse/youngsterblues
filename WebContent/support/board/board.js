@@ -48,7 +48,7 @@ app.controller('board', [
 					data : {
 						id : $scope.content.id,
 						head : $scope.content.head,
-						content : $scope.content.content
+						content : $scope.content.content.replace(/\r\n|\r|\n/g,"$#@!")
 					}
 				}).done(function(result) {
 					if (result.state) {
@@ -98,7 +98,7 @@ app.controller('board', [
 					dataType : "json",
 					data : {
 						id : $('#userId').val(),
-						content : $scope.addcontent.content,
+						content : $scope.addcontent.content.replace(/\r\n|\r|\n/g,"$#@!"),
 						head : $scope.addcontent.head,
 						type : type
 					}

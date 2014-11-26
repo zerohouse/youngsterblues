@@ -22,9 +22,9 @@ public class ModContentServlet extends HttpServlet {
 		resp.setContentType("application/json");
 
 		User user = (User) req.getSession().getAttribute("user");
-		String id = req.getParameter("id");
-		String head = req.getParameter("head");
-		String content = req.getParameter("content");
+		String id = req.getParameter("id").replaceAll("\\<.*?\\>", "");
+		String head = req.getParameter("head").replaceAll("\\<.*?\\>", "");
+		String content = req.getParameter("content").replaceAll("\\<.*?\\>", "").replaceAll("$#@!", "<br/>");
 		State state = new State();
 
 		if (user == null || id == null || head == null || content == null) {

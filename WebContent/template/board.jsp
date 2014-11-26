@@ -16,7 +16,17 @@
 		<div class='row'>
 			<div class='col-md-12'>
 				<div class='jumbotron'>
-					<h3>자유게시판</h3>
+					<h3>
+						<c:choose>
+							<c:when test="${type=='free'}">자유게시판</c:when>
+							<c:when test="${type=='bugreport'}">버그제보!!</c:when>
+							<c:otherwise>
+								<c:redirect url="/" />
+							</c:otherwise>
+						</c:choose>
+
+
+					</h3>
 				</div>
 			</div>
 		</div>

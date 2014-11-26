@@ -11,25 +11,25 @@
 <body ng-app='boardapp'>
 	<%@ include file="/components/_header.jspf"%>
 
+	<div class='jumbotron'>
+		<div class="container">
+
+			<h2>
+				<c:choose>
+					<c:when test="${type=='free'}">자유게시판</c:when>
+					<c:when test="${type=='bugreport'}">버그제보!!</c:when>
+					<c:otherwise>
+						<c:redirect url="/" />
+					</c:otherwise>
+				</c:choose>
+
+
+			</h2>
+		</div>
+	</div>
 
 	<div class='container' id='board' ng-controller="board">
-		<div class='row'>
-			<div class='col-md-12'>
-				<div class='jumbotron'>
-					<h3>
-						<c:choose>
-							<c:when test="${type=='free'}">자유게시판</c:when>
-							<c:when test="${type=='bugreport'}">버그제보!!</c:when>
-							<c:otherwise>
-								<c:redirect url="/" />
-							</c:otherwise>
-						</c:choose>
 
-
-					</h3>
-				</div>
-			</div>
-		</div>
 		<div class='row'>
 
 			<div class='col-md-12'>
@@ -61,7 +61,9 @@
 		<div class='row'>
 			<div class="align-center">
 				<ul class="pagination center">
-					<li ng-repeat="pagination in paginations" ng-class="{active:pagination.getClass, disabled:pagination.disabled}"><a href="{{pagination.link}}">{{pagination.page}}</a></li>
+					<li ng-repeat="pagination in paginations"
+						ng-class="{active:pagination.getClass, disabled:pagination.disabled}"><a
+						href="{{pagination.link}}">{{pagination.page}}</a></li>
 				</ul>
 			</div>
 		</div>
@@ -171,6 +173,7 @@
 
 
 
+		<%@ include file="/components/_footer.jspf"%>
 	</div>
 	<%@ include file="/components/_imports.jspf"%>
 	<script src="/plugin/angular/angular-sanitize.min.js"></script>
@@ -185,7 +188,7 @@
 			$('textarea').autosize();
 			if (content == '')
 				return;
-			if (page == 'page') {
+			if (content == 'page') {
 				return;
 			}
 			angular.element($('#board')).scope().getContent(content);

@@ -148,6 +148,7 @@
 				</div>
 			</div>
 		</div>
+		<%@ include file="/components/_footer.jspf"%>
 	</div>
 
 

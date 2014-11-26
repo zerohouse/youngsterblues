@@ -4,7 +4,7 @@
 
 var app = angular.module('boardapp', [ 'ngSanitize' ]);
 var contentview = $('#contentview');
-
+var loading = $('.loading');
 app
 		.controller(
 				'board',
@@ -14,6 +14,7 @@ app
 						'$sce',
 						function($scope, $http, $sce) {
 							$scope.getContents = function() {
+								loading.fadeIn(500);
 								$
 										.ajax(
 												{
@@ -28,9 +29,11 @@ app
 														page : page
 													}
 												}).done(function(result) {
+
 											$scope.setPage(result[0]);
 											$scope.contents = result[1];
 											$scope.$apply();
+											loading.fadeOut(500);
 										});
 							}
 							$scope.setPage = function(count) {
@@ -48,15 +51,15 @@ app
 											disabled : page == 1
 										});
 								$scope.paginations
-								.push({
-									page : "<",
-									link : page == 1 ? "#"
-											: "http://youngsterblues.com/board/"
-													+ type
-													+ "/page/"
-													+ (page - 1),
-									disabled : page == 1
-								});
+										.push({
+											page : "<",
+											link : page == 1 ? "#"
+													: "http://youngsterblues.com/board/"
+															+ type
+															+ "/page/"
+															+ (page - 1),
+											disabled : page == 1
+										});
 								for (var i = count; i > 0; i -= 10) {
 									j++;
 									$scope.paginations
@@ -66,19 +69,19 @@ app
 														+ type + "/page/" + j,
 												getClass : page == j
 											});
-									if(j>4)
+									if (j > 4)
 										break;
 								}
 								$scope.paginations
-								.push({
-									page : ">",
-									link : page == j ? "#"
-											: "http://youngsterblues.com/board/"
-													+ type
-													+ "/page/"
-													+ (page + 1),
-									disabled : page == j
-								});
+										.push({
+											page : ">",
+											link : page == j ? "#"
+													: "http://youngsterblues.com/board/"
+															+ type
+															+ "/page/"
+															+ (parseInt(page) + 1),
+											disabled : page == j
+										});
 
 								$scope.paginations
 										.push({
@@ -138,6 +141,7 @@ app
 							}
 
 							$scope.getContent = function(id) {
+								loading.fadeIn(500);
 								$
 										.ajax(
 												{
@@ -159,6 +163,7 @@ app
 											$scope.$apply();
 											console.log(data);
 											contentview.modal('show');
+											loading.fadeOut(500);
 										});
 							}
 

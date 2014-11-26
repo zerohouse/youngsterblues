@@ -69,3 +69,5 @@
 		<!--/.navbar-collapse -->
 	</div>
 </header>
+
+<div class='loading'></div>

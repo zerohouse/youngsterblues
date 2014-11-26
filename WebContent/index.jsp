@@ -40,7 +40,8 @@
 				<p>100포인트를 나누어 쓰는 게임, 9라운드에 걸쳐 진행되며 5승을 먼저 챙긴 플레이어가 이긴다. 선공과 후공이
 					동점이면 선공이 이긴다.</p>
 				<p>
-					<a class="btn btn-default" href="/game/blacknwhite/">게임하기 &raquo;</a>
+					<a class="btn btn-default" href="/game/blacknwhite/">게임하기
+						&raquo;</a>
 				</p>
 			</div>
 			<div class="col-lg-4">
@@ -53,11 +54,10 @@
 			</div>
 		</div>
 
-		<hr>
+		
+		
+		<%@ include file="/components/_footer.jspf"%>
 
-		<footer>
-			<p>&copy; 박成호 @NHNnext 2014</p>
-		</footer>
 	</div>
 	<!-- /container -->
 

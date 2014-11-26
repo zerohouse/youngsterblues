@@ -39,7 +39,7 @@ app
 							$scope.setPage = function(count) {
 								$scope.paginations = [];
 
-								var i = count - page * 10;
+								var j = 0;
 								$scope.paginations
 										.push({
 											page : "|<",
@@ -60,8 +60,8 @@ app
 															+ (page - 1),
 											disabled : page > count / 10
 										});
-								for (var j = page; j < 5; j++) {
-									i -= 10;
+								for (var i = count; i > 0; i -= 10) {
+									j++;
 									$scope.paginations
 											.push({
 												page : j,
@@ -69,7 +69,7 @@ app
 														+ type + "/page/" + j,
 												getClass : page == j
 											});
-									if (i < 0)
+									if (j > 4)
 										break;
 								}
 								$scope.paginations

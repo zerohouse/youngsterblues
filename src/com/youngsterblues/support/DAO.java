@@ -12,6 +12,25 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class DAO {
+	
+	private String sql;
+	private Integer resultSize;
+	private ArrayList<Object> parameters = new ArrayList<Object>();
+	private ArrayList<Object> result;
+	
+	public void setSql(String sql) {
+		this.sql = sql;
+	}
+
+	public void setResultSize(Integer resultSize) {
+		this.resultSize = resultSize;
+	}
+	
+	public void addParameters(Object parameter){
+		parameters.add(parameter);
+	}
+	
+
 	public Connection getConnection() {
 		Connection con = null;
 		String url = "jdbc:mysql://54.65.20.191:3306/youngster?useUnicode=true&characterEncoding=utf8";
@@ -37,7 +56,7 @@ public class DAO {
 		return date;
 	}
 	
-	public boolean executeQuery(String sql, ArrayList<Object> parameters) {
+	public boolean executeQuery() {
 		PreparedStatement pstmt = null;
 		Connection conn = null;
 		Date date;
@@ -76,12 +95,11 @@ public class DAO {
 		return false;
 	}
 
-	public ArrayList<Object> selectQuery(String sql,
-			ArrayList<Object> parameters, int resultSetLength) {
+	public ArrayList<Object> selectQuery() {
+		result = new ArrayList<Object>();
 		PreparedStatement pstmt = null;
 		Connection conn = null;
 		ResultSet rs = null;
-		ArrayList<Object> result = new ArrayList<Object>();
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -96,7 +114,7 @@ public class DAO {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				for (int i = 0; i < resultSetLength; i++) {
+				for (int i = 0; i < resultSize; i++) {
 					result.add(rs.getObject(i + 1));
 				}
 			}

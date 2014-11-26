@@ -24,7 +24,7 @@ public class ModContentServlet extends HttpServlet {
 		User user = (User) req.getSession().getAttribute("user");
 		String id = req.getParameter("id").replaceAll("\\<.*?\\>", "");
 		String head = req.getParameter("head").replaceAll("\\<.*?\\>", "");
-		String content = req.getParameter("content").replaceAll("\\<.*?\\>", "").replaceAll("$#@!", "<br/>");
+		String content = req.getParameter("content").replaceAll("\\<.*?\\>", "").replaceAll("BrAkELInE", "<br>");
 		State state = new State();
 
 		if (user == null || id == null || head == null || content == null) {

@@ -59,12 +59,20 @@
 		</div>
 
 		<div class='row'>
+			<div class="align-center">
+				<ul class="pagination center">
+					<li ng-repeat="pagination in paginations" ng-class="{active:pagination.getClass, disabled:pagination.disabled}"><a href="{{pagination.link}}">{{pagination.page}}</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class='row'>
 			<div class='col-md-12'>
-				<button class='btn btn-primary' data-toggle="modal"
+				<button class='btn btn-primary btn-lg' data-toggle="modal"
 					data-target="#writearticle">글쓰기</button>
 			</div>
 
 		</div>
+
 
 		<!-- Modal 글본문 -->
 		<div class="modal fade" id="contentview" tabindex="-1" role="dialog"
@@ -88,8 +96,7 @@
 					</div>
 					<div class="modal-body">
 
-						<div class="well">{{content.content}}</div>
-
+						<p ng-bind-html="content.content"></p>
 					</div>
 					<div class="modal-footer">
 						<div class="btn btn-primary" ng-show="isMine(content.userId)"
@@ -152,8 +159,7 @@
 						</h5>
 					</div>
 					<div class="modal-body">
-						<textarea class="form-control" placeholder='내용'
-							ng-model="content.content">{{content.content}}</textarea>
+						<textarea class="form-control" placeholder='내용' id='modContent'></textarea>
 					</div>
 					<div class="modal-footer">
 						<div class="btn btn-primary" ng-click='modContentSubmit()'>수정하기</div>
@@ -167,14 +173,21 @@
 
 	</div>
 	<%@ include file="/components/_imports.jspf"%>
+	<script src="/plugin/angular/angular-sanitize.min.js"></script>
 	<script src='/plugin/jquery/jquery.autosize.min.js'></script>
 	<script>
 		var type = '${type}';
 		var content = '${content}';
+		var page = '${page}';
+		if (page == '')
+			page = 1;
 		$(document).ready(function() {
 			$('textarea').autosize();
 			if (content == '')
 				return;
+			if (page == 'page') {
+				return;
+			}
 			angular.element($('#board')).scope().getContent(content);
 
 		});

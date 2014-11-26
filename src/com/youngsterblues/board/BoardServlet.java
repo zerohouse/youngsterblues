@@ -24,6 +24,11 @@ public class BoardServlet extends HttpServlet {
 			req.setAttribute("type", path[1]);
 		if (path.length > 2)
 			req.setAttribute("content", path[2]);
+		if (path.length > 3) {
+			req.setAttribute("content", "page");
+			req.setAttribute("page", path[3]);
+		}
+
 		dispatcher.forward(req, resp);
 
 	}

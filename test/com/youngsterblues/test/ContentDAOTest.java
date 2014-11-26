@@ -23,7 +23,7 @@ public class ContentDAOTest {
 	@Test
 	public void addDBTest() {
 		Content content = new Content("free", "zerohouse", "head",
-				"contents", new Date());
+				"sssdfgasdfad$#@!$#@!sfssBrAkELInEBrAkELIne", new Date());
 		dao.addDB(content);
 	}
 
@@ -37,38 +37,43 @@ public class ContentDAOTest {
 
 		assertNotNull(contents);
 	}
-	
+
 	@Test
 	public void getContentHeadTest() {
-		ArrayList<Content> contents = dao.getContentsHeadList("free", 10);
+		ArrayList<Content> contents = dao.getContentsHeadList("free", 2, 10);
 		System.out.println(contents.size());
 		for (int i = 0; i < contents.size(); i++) {
 			System.out.println(contents.get(i));
 		}
 		assertNotNull(contents);
 	}
-	
+
 	@Test
 	public void getContentTest() {
 		Content content = dao.getContent(10);
 
 		System.out.println("content " + content);
-		
+
 		assertNotNull(content);
-		
+
 	}
-	
+
 	@Test
 	public void deleteContentTest() {
 		assertTrue(dao.deleteDB(2));
 
 	}
-	
+
 	@Test
 	public void modContentTest() {
-		assertTrue(dao.modDB("zerohouse", 46, "sssdfgasdfadsfss", "ssdfgsdfasdfdsfgs"));
+		assertTrue(dao.modDB("zerohouse", 61,
+				"sssdfgasdfad$#@!$#@!sfss".replaceAll("$#@!", "<br>"),
+				"ssdfgsdfasdfdsfgs"));
 
 	}
-	
 
+	@Test
+	public void getCountTest() {
+		System.out.println(dao.getContentCount("bugreport"));
+	}
 }

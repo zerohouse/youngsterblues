@@ -13,10 +13,10 @@ public class UserDAO {
 	}
 
 	public User getUser(String id) {
-		String sql = "select * from user where id=?";
-		ArrayList<Object> parameters = new ArrayList<Object>();
-		parameters.add(id);
-		ArrayList<Object> userString = dao.selectQuery(sql, parameters, 3);
+		dao.setSql("select * from user where id=?");
+		dao.addParameters(id);
+		dao.setResultSize(3);
+		ArrayList<Object> userString = dao.selectQuery();
 		if (userString.size() == 0)
 			return null;
 		return new User((String) userString.get(0), (String) userString.get(1),
@@ -24,12 +24,11 @@ public class UserDAO {
 	}
 
 	public boolean addDB(User user) {
-		String sql = "insert into user values(?,?,?)";
-		ArrayList<Object> parameters = new ArrayList<Object>();
-		parameters.add(user.getId());
-		parameters.add(user.getPassword());
-		parameters.add(user.getName());
-		return dao.executeQuery(sql, parameters);
+		dao.setSql("insert into user values(?,?,?)");
+		dao.addParameters(user.getId());
+		dao.addParameters(user.getPassword());
+		dao.addParameters(user.getName());
+		return dao.executeQuery();
 	}
 
 	public boolean updateDB(User user) {
@@ -39,11 +38,11 @@ public class UserDAO {
 				.getName();
 		password = user.getPassword().length() == 0 ? userorigin.getPassword()
 				: user.getPassword();
-		String sql = "update user set name=?, password=? where id=?";
-		ArrayList<Object> parameters = new ArrayList<Object>();
-		parameters.add(name);
-		parameters.add(password);
-		parameters.add(user.getId());
-		return dao.executeQuery(sql, parameters);
+		
+		dao.setSql("update user set name=?, password=? where id=?");
+		dao.addParameters(name);
+		dao.addParameters(password);
+		dao.addParameters(user.getId());
+		return dao.executeQuery();
 	}
 }

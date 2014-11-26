@@ -16,32 +16,23 @@ import com.google.gson.Gson;
 public class GetContentsServlet extends HttpServlet {
 	
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
-		ContentDAO conDAO = new ContentDAO();
-		String type = req.getParameter("type");
-		String size = req.getParameter("size");
-		if(type==null)
-			type = "free";
-		if(size==null)
-			size = "10";
-		ArrayList<Content> contents = conDAO.getContentsHeadList(type, Integer.parseInt(size));
-		Gson gson = new Gson();
-		resp.getWriter().write(gson.toJson(contents));
-	}
-	
-	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		ContentDAO conDAO = new ContentDAO();
 		String type = req.getParameter("type");
 		String size = req.getParameter("size");
+		String page = req.getParameter("page");
 		if(type==null)
 			type = "free";
 		if(size==null)
 			size = "10";
-		ArrayList<Content> contents = conDAO.getContentsHeadList(type, Integer.parseInt(size));
+		if(page==null)
+			page = "1";
+		ArrayList<Content> contents = conDAO.getContentsHeadList(type, Integer.parseInt(page) ,Integer.parseInt(size));
+		ArrayList<Object> result = new ArrayList<Object>();
+		result.add(new ContentDAO().getContentCount(type));
+		result.add(contents);
 		Gson gson = new Gson();
-		resp.getWriter().write(gson.toJson(contents));
+		resp.getWriter().write(gson.toJson(result));
 	}
 }

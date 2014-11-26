@@ -25,7 +25,7 @@ public class AddContentServlet extends HttpServlet {
 		User user = (User) req.getSession().getAttribute("user");
 		String id = req.getParameter("id").replaceAll("\\<.*?\\>", "");
 		String head = req.getParameter("head").replaceAll("\\<.*?\\>", "");
-		String content = req.getParameter("content").replaceAll("\\<.*?\\>", "").replaceAll("$#@!", "<br/>");
+		String content = req.getParameter("content").replaceAll("\\<.*?\\>", "").replaceAll("BrAkELInE", "<br>");
 		String type = req.getParameter("type").replaceAll("\\<.*?\\>", "");
 		State state = new State();
 

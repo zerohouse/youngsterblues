@@ -3,3 +3,11 @@
 td {
 	cursor: pointer;
 }
+
+.align-center{
+	text-align:center;
+}
+
+.center{
+	display:inline-block;
+}

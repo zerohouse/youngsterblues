@@ -40,7 +40,7 @@
 				<p>100포인트를 나누어 쓰는 게임, 9라운드에 걸쳐 진행되며 5승을 먼저 챙긴 플레이어가 이긴다. 선공과 후공이
 					동점이면 선공이 이긴다.</p>
 				<p>
-					<a class="btn btn-default" href="#">게임하기 &raquo;</a>
+					<a class="btn btn-default" href="/game/blacknwhite/">게임하기 &raquo;</a>
 				</p>
 			</div>
 			<div class="col-lg-4">

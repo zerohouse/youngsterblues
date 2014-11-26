@@ -7,7 +7,6 @@
 <title>흑과백2</title>
 <%@ include file="/components/_css.jspf"%>
 <link rel='stylesheet' href='chat.css'>
-<link rel='stylesheet' href='animal.css'>
 </head>
 <body ng-app="blacknwhite">
 	<%@ include file="/components/_header.jspf"%>

@@ -7,6 +7,8 @@ $().showUp('.navbar', {
 	downClass : 'navbar-hide'
 });
 
+$(window).load(function() { $('.loading').fadeOut(500); });
+
 (function() {
 
 	var errorMessage = $('#errorMessage');

@@ -1,43 +1,40 @@
--- MySQL Workbench Forward Engineering
-
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
---  -----------------------------------------------------
+-- -----------------------------------------------------
 -- Schema youngster
 -- -----------------------------------------------------
 
--- -----------------------------------------------------
--- Schema youngster
--- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `youngster` DEFAULT CHARACTER SET utf8 ;
-USE `mydb` ;
-
--- -----------------------------------------------------
--- Table `mydb`.`freeboard`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`freeboard` (
-  `id` INT NOT NULL,
-  `user` VARCHAR(45) NOT NULL,
-  `head` VARCHAR(45) NOT NULL,
-  `contents` VARCHAR(45) NOT NULL,
-  `timestamp` DATETIME NOT NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB;
 
 USE `youngster` ;
 
 -- -----------------------------------------------------
 -- Table `youngster`.`user`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `youngster`.`user` (
-  `id` VARCHAR(45) NOT NULL,
-  `password` VARCHAR(45) NOT NULL,
-  `name` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
+
+CREATE TABLE `user` (
+  `id` varchar(45) NOT NULL,
+  `password` varchar(45) NOT NULL,
+  `name` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+
+
+-- -----------------------------------------------------
+-- Table `youngster`.`contents`
+-- -----------------------------------------------------
+
+CREATE TABLE `contents` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` varchar(45) NOT NULL,
+  `userid` varchar(45) NOT NULL,
+  `head` varchar(45) NOT NULL,
+  `content` text,
+  `timestamp` datetime NOT NULL,
+  PRIMARY KEY (`id`,`type`)
+) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=utf8
 
 
 SET SQL_MODE=@OLD_SQL_MODE;

@@ -39,7 +39,6 @@ app
 							$scope.setPage = function(count) {
 								$scope.paginations = [];
 
-								var j = 0;
 								$scope.paginations
 										.push({
 											page : "|<",
@@ -58,10 +57,14 @@ app
 															+ type
 															+ "/page/"
 															+ (page - 1),
-											disabled : page > count / 10
+											disabled : page == 1
 										});
-								for (var i = count; i > 0; i -= 10) {
-									j++;
+								var contentsinonepage = 10;
+								var max = parseInt(count / contentsinonepage) + 1;
+								var startpage = parseInt((page - 1) / 5) * 5 + 1
+								var j = startpage;
+
+								for (var i = 0; i < 5; i++) {
 									$scope.paginations
 											.push({
 												page : j,
@@ -69,9 +72,11 @@ app
 														+ type + "/page/" + j,
 												getClass : page == j
 											});
-									if (j > 4)
+									if (j >= max)
 										break;
+									j++;
 								}
+
 								$scope.paginations
 										.push({
 											page : ">",
@@ -80,7 +85,8 @@ app
 															+ type
 															+ "/page/"
 															+ (parseInt(page) + 1),
-											disabled : page == (parseInt(count / 10) + 1)
+											disabled : page == (parseInt(count
+													/ contentsinonepage) + 1)
 										});
 
 								$scope.paginations
@@ -90,8 +96,10 @@ app
 													: "http://youngsterblues.com/board/"
 															+ type
 															+ "/page/"
-															+ (parseInt(count / 10) + 1),
-											disabled : page == (parseInt(count / 10) + 1)
+															+ (parseInt(count
+																	/ contentsinonepage) + 1),
+											disabled : page == (parseInt(count
+													/ contentsinonepage) + 1)
 										});
 
 							};

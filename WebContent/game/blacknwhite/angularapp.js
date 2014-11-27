@@ -103,8 +103,6 @@ startbtn.click(function() {
 	});
 });
 
-
-
 var app = angular.module('blacknwhite', []);
 var joined = false;
 
@@ -152,6 +150,8 @@ app.controller('blacknwhite', [ '$scope', function($scope) {
 		}
 		bnw.ongame = false;
 		bnw.ready = false;
+		bnw.submittedPoint = undefined;
+		bnw.myPoints = [];
 		$('#alertTo').unbind('click');
 		$('#alertTo').show();
 		startbtn.removeClass('btn-success');
@@ -176,21 +176,24 @@ app.controller('blacknwhite', [ '$scope', function($scope) {
 	}
 } ]);
 
-function alertToScreen(message) {
+function alertToScreen(message, type) {
 	var alertTo = $('#alertTo');
+	chat({
+		chat : message.replace(/<br>/g, " "),
+		time : getNow()
+	});
+	if (type == 'small') {
+		message = "<p class='smallalert'>" + message + "</p>";
+	}
 	if (alertTo.css('display') == 'block') {
-		alertTo.html(alertTo.text() + "<br>" + message);
+		alertTo.html(alertTo.html() + "<br>" + message);
 	} else {
-		alertTo.text(message);
+		alertTo.html(message);
 	}
 	alertTo.show('drop', 500);
 	setTimeout(function() {
 		alertTo.hide('drop', 500);
 	}, 2000);
-	chat({
-		chat : message,
-		time : getNow()
-	});
 	alertTo.click(function() {
 		alertTo.hide();
 	});

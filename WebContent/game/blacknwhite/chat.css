@@ -86,3 +86,21 @@
 .blur{
 	opacity:0.3;
 }
+
+#chess{
+	height:inherit;
+	text-align:center;
+}
+
+
+#chess > ul{
+	width:400px;
+	list-style:none;
+	display:inline-block;
+	margin-right:20px;
+
+}
+
+.smallalert {
+font-size: 22px;
+}

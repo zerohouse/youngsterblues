@@ -38,7 +38,6 @@ socket.on('game', function(data) {
 		break;
 
 	case 'yourturn':
-		console.log(data.point);
 		bnw.scope().game = data.enemy;
 		bnw.scope().enemy = data.game;
 		if (bnw.submittedPoint == undefined) {
@@ -47,6 +46,7 @@ socket.on('game', function(data) {
 			bnw.myTurnStart();
 			return;
 		}
+
 		bnw.winCheck(data.point);
 		bnw.submittedPoint = undefined;
 		break;
@@ -56,11 +56,14 @@ socket.on('game', function(data) {
 		break;
 	case 'youlose':
 		bnw.gameEnd(false);
+		bnw.alertRoundPoints(data.myPoints);
+
 		break;
 	case 'youwin':
 		bnw.gameEnd(true);
-		break;
+		bnw.alertRoundPoints(data.myPoints);
 
+		break;
 	}
 
 });
@@ -95,6 +98,8 @@ var bnw = {
 	ready : false,
 	submittedPoint : undefined,
 	submitPoint : function(point) {
+		alertToScreen(point + ' 포인트를 제출했습니다.', 'small');
+		bnw.myPoints.push(point);
 		if (bnw.submittedPoint == undefined) {
 			bnw.blacknwhite(point);
 			socket.emit('game', {
@@ -103,7 +108,6 @@ var bnw = {
 				game : bnw.scope().game,
 				enemy : bnw.scope().enemy
 			});
-			console.log(point);
 			bnw.myTurn = false;
 			return;
 		}
@@ -163,6 +167,15 @@ var bnw = {
 		}
 	},
 
+	alertRoundPoints : function(yourPoints) {
+		var message = "";
+		for (var i = 0; i < bnw.myPoints.length; i++) {
+			message += "라운드" + (i + 1) + " > " + "상대방:" + yourPoints[i]
+					+ ", 나:" + bnw.myPoints[i] + "<br>";
+		}
+		alertToScreen(message, 'small');
+	},
+
 	gameEnd : function(isWin) {
 		if (!bnw.ongame)
 			return;
@@ -171,10 +184,15 @@ var bnw = {
 		if (isWin) {
 			alertTo.text('승리');
 			socket.emit('game', {
-				type : 'youlose'
+				type : 'youlose',
+				myPoints : bnw.myPoints
 			});
 		} else {
 			alertTo.text('패배');
+			socket.emit('game', {
+				type : 'youwin',
+				myPoints : bnw.myPoints
+			});
 		}
 		alertTo.unbind('click');
 		alertTo.show('pulsate', 500);

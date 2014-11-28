@@ -11,41 +11,6 @@ public class ContentDAO {
 		dao = new DAO();
 	}
 
-	public ArrayList<Content> getContentsList(int size) {
-		Content content;
-		dao.setSql("select * from contents order by id desc limit 0, ?");
-		dao.setResultSize(6);
-		dao.addParameters(size);
-		ArrayList<Object> sq = dao.selectQuery();
-		ArrayList<Content> result = new ArrayList<Content>();
-		for (int i = 0; i < sq.size(); i = i + 6) {
-			content = new Content((Integer) sq.get(i),
-					sq.get(i + 1).toString(), sq.get(i + 2).toString(), sq.get(
-							i + 3).toString(), sq.get(i + 4).toString(),
-					dao.parseDate(sq.get(i + 5)));
-			result.add(content);
-		}
-		return result;
-	}
-
-	public ArrayList<Content> getContentsList(String type, int size) {
-		Content content;
-		dao.setSql("select * from contents where type=? order by id desc limit 0, ?");
-		dao.addParameters(type);
-		dao.addParameters(size);
-		dao.setResultSize(6);
-		ArrayList<Content> result = new ArrayList<Content>();
-		ArrayList<Object> sq = dao.selectQuery();
-		for (int i = 0; i < sq.size(); i = i + 6) {
-			content = new Content((Integer) sq.get(i),
-					sq.get(i + 1).toString(), sq.get(i + 2).toString(), sq.get(
-							i + 3).toString(), sq.get(i + 4).toString(),
-					dao.parseDate(sq.get(i + 5)));
-			result.add(content);
-		}
-		return result;
-	}
-
 	public ArrayList<Content> getContentsHeadList(String type, int page,
 			int size) {
 		Content content;
@@ -54,13 +19,14 @@ public class ContentDAO {
 		dao.addParameters((page - 1) * 10);
 		dao.addParameters(size);
 		dao.setResultSize(4);
-		ArrayList<Object> sq = dao.selectQuery();
+		ArrayList<ArrayList<Object>> sq = dao.getRecords();
 		ArrayList<Content> result = new ArrayList<Content>();
-
+		if (sq.size() == 0)
+			return null;
 		for (int i = 0; i < sq.size(); i = i + 4) {
-			content = new Content((Integer) sq.get(i),
-					sq.get(i + 1).toString(), sq.get(i + 2).toString(),
-					dao.parseDate(sq.get(i + 3).toString()));
+			content = new Content((Integer) sq.get(i).get(0), sq.get(i).get(1)
+					.toString(), sq.get(i).get(2).toString(), dao.parseDate(sq
+					.get(i).get(3).toString()));
 			result.add(content);
 		}
 		return result;
@@ -73,20 +39,20 @@ public class ContentDAO {
 		dao.addParameters(content.getHead());
 		dao.addParameters(content.getContent());
 		dao.addParameters(content.getDatetime());
-		return dao.executeQuery();
+		return dao.doQuery();
 	}
 
 	public boolean deleteDB(int contentId) {
 		dao.setSql("delete from contents where id=?");
 		dao.addParameters(contentId);
-		return dao.executeQuery();
+		return dao.doQuery();
 	}
 
 	public Content getContent(int id) {
 		dao.setSql("select * from contents where id=?");
 		dao.addParameters(id);
 		dao.setResultSize(6);
-		ArrayList<Object> sq = dao.selectQuery();
+		ArrayList<Object> sq = dao.getRecord();
 		if (sq.size() == 0)
 			return null;
 		return new Content((Integer) sq.get(0), sq.get(1).toString(), sq.get(2)
@@ -101,14 +67,14 @@ public class ContentDAO {
 		dao.addParameters(content);
 		dao.addParameters(contentId);
 		dao.addParameters(userId);
-		return dao.executeQuery();
+		return dao.doQuery();
 	}
 
 	public Integer getContentCount(String type) {
 		dao.setSql("select count(id) from contents where type=?");
 		dao.addParameters(type);
 		dao.setResultSize(1);
-		ArrayList<Object> sq = dao.selectQuery();
+		ArrayList<Object> sq = dao.getRecord();
 		if (sq.size() == 0)
 			return null;
 		return Integer.parseInt(sq.get(0).toString());

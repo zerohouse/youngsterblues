@@ -27,16 +27,6 @@ public class ContentDAOTest {
 		dao.addDB(content);
 	}
 
-	@Test
-	public void getContentsTest() {
-		ArrayList<Content> contents = dao.getContentsList("free", 10);
-		System.out.println(contents.size());
-		for (int i = 0; i < contents.size(); i++) {
-			System.out.println(contents.get(i));
-		}
-
-		assertNotNull(contents);
-	}
 
 	@Test
 	public void getContentHeadTest() {

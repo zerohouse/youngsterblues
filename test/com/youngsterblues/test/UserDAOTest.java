@@ -27,7 +27,7 @@ public class UserDAOTest {
 	
 	@Test
 	public void addDBTest(){
-		User user = new User("tester4", "1234", "고랑이");
+		User user = new User("tester44", "1234", "고랑이");
 		assertFalse(userdao.addDB(user));
 	}
 

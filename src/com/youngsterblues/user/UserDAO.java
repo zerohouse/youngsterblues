@@ -16,7 +16,7 @@ public class UserDAO {
 		dao.setSql("select * from user where id=?");
 		dao.addParameters(id);
 		dao.setResultSize(3);
-		ArrayList<Object> userString = dao.selectQuery();
+		ArrayList<Object> userString = dao.getRecord();
 		if (userString.size() == 0)
 			return null;
 		return new User((String) userString.get(0), (String) userString.get(1),
@@ -28,7 +28,7 @@ public class UserDAO {
 		dao.addParameters(user.getId());
 		dao.addParameters(user.getPassword());
 		dao.addParameters(user.getName());
-		return dao.executeQuery();
+		return dao.doQuery();
 	}
 
 	public boolean updateDB(User user) {
@@ -43,6 +43,6 @@ public class UserDAO {
 		dao.addParameters(name);
 		dao.addParameters(password);
 		dao.addParameters(user.getId());
-		return dao.executeQuery();
+		return dao.doQuery();
 	}
 }

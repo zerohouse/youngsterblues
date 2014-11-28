@@ -12,12 +12,11 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class DAO {
-	
+
 	private String sql;
 	private Integer resultSize;
 	private ArrayList<Object> parameters = new ArrayList<Object>();
-	private ArrayList<Object> result;
-	
+
 	public void setSql(String sql) {
 		this.sql = sql;
 	}
@@ -25,11 +24,10 @@ public class DAO {
 	public void setResultSize(Integer resultSize) {
 		this.resultSize = resultSize;
 	}
-	
-	public void addParameters(Object parameter){
+
+	public void addParameters(Object parameter) {
 		parameters.add(parameter);
 	}
-	
 
 	public Connection getConnection() {
 		Connection con = null;
@@ -55,25 +53,14 @@ public class DAO {
 		}
 		return date;
 	}
-	
-	public boolean executeQuery() {
+
+	public boolean doQuery() {
 		PreparedStatement pstmt = null;
 		Connection conn = null;
-		Date date;
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
-
-			for (int i = 0; i < parameters.size(); i++) {
-				if (parameters.get(i) instanceof String) {
-					pstmt.setString(i + 1, (String) parameters.get(i));
-				} else if (parameters.get(i) instanceof Integer) {
-					pstmt.setInt(i + 1, (Integer) parameters.get(i));
-				} else if (parameters.get(i) instanceof Date) {
-					date = (Date) parameters.get(i);
-					pstmt.setTimestamp(i + 1, new Timestamp(date.getTime()));
-				}
-			}
+			setParameters(pstmt);
 			pstmt.execute();
 			return true;
 
@@ -95,33 +82,23 @@ public class DAO {
 		return false;
 	}
 
-	public ArrayList<Object> selectQuery() {
-		result = new ArrayList<Object>();
+	public ArrayList<Object> getRecord() {
+		ArrayList<Object> result = new ArrayList<Object>();
 		PreparedStatement pstmt = null;
 		Connection conn = null;
 		ResultSet rs = null;
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
-
-			for (int i = 0; i < parameters.size(); i++) {
-				if (parameters.get(i) instanceof String) {
-					pstmt.setString(i + 1, (String) parameters.get(i));
-				} else if (parameters.get(i) instanceof Integer) {
-					pstmt.setInt(i + 1, (Integer) parameters.get(i));
-				}
-			}
+			setParameters(pstmt);
 			rs = pstmt.executeQuery();
-
-			while (rs.next()) {
+			if (rs.next()) {
 				for (int i = 0; i < resultSize; i++) {
 					result.add(rs.getObject(i + 1));
 				}
 			}
-
 		} catch (SQLException e) {
 			e.printStackTrace();
-
 		} finally {
 			if (pstmt != null)
 				try {
@@ -140,5 +117,61 @@ public class DAO {
 				}
 		}
 		return result;
+	}
+
+	public ArrayList<ArrayList<Object>> getRecords() {
+		ArrayList<ArrayList<Object>> result = new ArrayList<ArrayList<Object>>();
+		ArrayList<Object> record;
+		PreparedStatement pstmt = null;
+		Connection conn = null;
+		ResultSet rs = null;
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			setParameters(pstmt);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				record = new ArrayList<Object>();
+				for (int i = 0; i < resultSize; i++) {
+					record.add(rs.getObject(i + 1));
+				}
+				result.add(record);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (SQLException sqle) {
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (SQLException sqle) {
+				}
+			if (rs != null)
+				try {
+					conn.close();
+				} catch (SQLException sqle) {
+				}
+		}
+		return result;
+	}
+
+	private void setParameters(PreparedStatement pstmt) throws SQLException {
+		Date date;
+		for (int i = 0; i < parameters.size(); i++) {
+			if (parameters.get(i) instanceof String) {
+				pstmt.setString(i + 1, (String) parameters.get(i));
+			} else if (parameters.get(i) instanceof Integer) {
+				pstmt.setInt(i + 1, (Integer) parameters.get(i));
+			} else if (parameters.get(i) instanceof Long) {
+				pstmt.setLong(i + 1, (long) parameters.get(i));
+			} else if (parameters.get(i) instanceof Date) {
+				date = (Date) parameters.get(i);
+				pstmt.setTimestamp(i + 1, new Timestamp(date.getTime()));
+			}
+		}
 	}
 }

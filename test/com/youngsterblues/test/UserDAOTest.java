@@ -21,6 +21,7 @@ public class UserDAOTest {
 	@Test
 	public void machPasswordTest(){
 		User user = userdao.getUser("zerohouse");
+		System.out.println(user);
 		assertFalse(user.matchPassword("123"));
 		assertTrue(user.matchPassword("1234"));
 	}

@@ -6,13 +6,9 @@ import com.youngsterblues.support.DAO;
 
 public class UserDAO {
 
-	DAO dao;
-
-	public UserDAO() {
-		dao = new DAO();
-	}
 
 	public User getUser(String id) {
+		DAO dao = new DAO();
 		dao.setSql("select * from user where id=?");
 		dao.addParameters(id);
 		dao.setResultSize(3);
@@ -24,6 +20,7 @@ public class UserDAO {
 	}
 
 	public boolean addDB(User user) {
+		DAO dao = new DAO();
 		dao.setSql("insert into user values(?,?,?)");
 		dao.addParameters(user.getId());
 		dao.addParameters(user.getPassword());
@@ -32,6 +29,7 @@ public class UserDAO {
 	}
 
 	public boolean updateDB(User user) {
+		DAO dao = new DAO();
 		String name, password;
 		User userorigin = getUser(user.getId());
 		name = user.getName().length() == 0 ? userorigin.getName() : user

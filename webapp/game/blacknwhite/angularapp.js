@@ -1,7 +1,7 @@
 /**
  * 
  */
-var socket = io('http://54.65.20.191:8001');
+var socket = io('http://54.65.10.82:8001');
 
 socket.emit('init', {
 	name : $('#userName').val(),

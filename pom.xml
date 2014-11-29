@@ -54,7 +54,7 @@
 	</dependencies>
 
 	<build>
-
+		<finalName>ROOT</finalName>
 		<sourceDirectory>src</sourceDirectory>
 		<testSourceDirectory>test</testSourceDirectory>
 		<outputDirectory>webapp/WEB-INF/classes</outputDirectory>
@@ -100,6 +100,34 @@
 					<overWriteReleases>false</overWriteReleases>
 					<overWriteSnapshots>false</overWriteSnapshots>
 					<overWriteIfNewer>true</overWriteIfNewer>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.cargo</groupId>
+				<artifactId>cargo-maven2-plugin</artifactId>
+				<version>1.4.8</version>
+				<configuration>
+					<container>
+						<containerId>tomcat8x</containerId>
+						<home>${env.CATALINA_HOME}</home>
+					</container>
+					<configuration>
+						<type>existing</type>
+						<home>${env.CATALINA_HOME}</home>
+					</configuration>
+					<deployables>
+						<deployable>
+							<groupId>com.youngster</groupId>
+							<artifactId>ROOT</artifactId>
+							<type>war</type>
+							<properties>
+								<context>/</context>
+							</properties>
+						</deployable>
+					</deployables>
+					<deployer>
+						<type>installed</type>
+					</deployer>
 				</configuration>
 			</plugin>
 		</plugins>

@@ -31,8 +31,8 @@ public class DAO {
 
 	public Connection getConnection() {
 		Connection con = null;
-		String url = "jdbc:mysql://54.65.20.191:3306/youngster?useUnicode=true&characterEncoding=utf8";
-		String id = "youngster";
+		String url = "jdbc:mysql://youngsterblues.crb97qp69ve9.ap-northeast-1.rds.amazonaws.com:3306/youngster?useUnicode=true&characterEncoding=utf8";
+		String id = "zerohouse";
 		String pw = "qkrtjdgh1";
 		try {
 			Class.forName("com.mysql.jdbc.Driver");

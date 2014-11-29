@@ -30,7 +30,7 @@ public class ContentDAOTest {
 
 	@Test
 	public void getContentHeadTest() {
-		ArrayList<Content> contents = dao.getContentsHeadList("free", 2, 10);
+		ArrayList<Content> contents = dao.getContentsHeadList("free", 1, 10);
 		System.out.println(contents.size());
 		for (int i = 0; i < contents.size(); i++) {
 			System.out.println(contents.get(i));
@@ -40,7 +40,7 @@ public class ContentDAOTest {
 
 	@Test
 	public void getContentTest() {
-		Content content = dao.getContent(10);
+		Content content = dao.getContent(1);
 
 		System.out.println("content " + content);
 

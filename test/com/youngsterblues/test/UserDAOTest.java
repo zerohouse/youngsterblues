@@ -22,12 +22,12 @@ public class UserDAOTest {
 	public void machPasswordTest(){
 		User user = userdao.getUser("zerohouse");
 		assertFalse(user.matchPassword("123"));
-		assertTrue(user.matchPassword("12345"));
+		assertTrue(user.matchPassword("1234"));
 	}
 	
 	@Test
 	public void addDBTest(){
-		User user = new User("tester44", "1234", "고랑이");
+		User user = new User("zerohouse", "1234", "고랑이");
 		assertFalse(userdao.addDB(user));
 	}
 

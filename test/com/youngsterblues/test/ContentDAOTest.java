@@ -38,6 +38,7 @@ public class ContentDAOTest {
 		assertNotNull(contents);
 	}
 
+
 	@Test
 	public void getContentTest() {
 		Content content = dao.getContent(1);
@@ -64,6 +65,6 @@ public class ContentDAOTest {
 
 	@Test
 	public void getCountTest() {
-		System.out.println(dao.getContentCount("bugreport"));
+		System.out.println(dao.getContentCount("free"));
 	}
 }

@@ -23,7 +23,7 @@ public class ContentDAO {
 		ArrayList<Content> result = new ArrayList<Content>();
 		if (sq.size() == 0)
 			return null;
-		for (int i = 0; i < sq.size(); i = i + 4) {
+		for (int i = 0; i < sq.size(); i++) {
 			content = new Content((Integer) sq.get(i).get(0), sq.get(i).get(1)
 					.toString(), sq.get(i).get(2).toString(), dao.parseDate(sq
 					.get(i).get(3).toString()));

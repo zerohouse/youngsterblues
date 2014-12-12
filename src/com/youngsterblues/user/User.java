@@ -1,6 +1,12 @@
 package com.youngsterblues.user;
 
 public class User {
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", password=" + password + ", name=" + name
+				+ "]";
+	}
+
 	private String id;
 	private String password;
 	private String name;

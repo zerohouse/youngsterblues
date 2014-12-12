@@ -21,4 +21,5 @@ public class IdCheckServlet extends HttpServlet {
 		}
 		resp.getWriter().write("true");
 	}
+
 }

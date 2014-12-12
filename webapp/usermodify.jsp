@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,7 +9,6 @@
 	<c:redirect url="signup.jsp" />
 </c:if>
 <%@ include file="/components/_css.jspf"%>
-<link rel='stylesheet' href="/support/signup.css">
 </head>
 <body>
 
@@ -26,9 +25,10 @@
 							<div class="input-group input-group-lg">
 								<span class="input-group-addon">UserID</span><input id='signid'
 									type="text" class="form-control" placeholder="UserID"
-									maxlength="12" data-placement="bottom" value="${sessionScope.user.id}" disabled>
+									maxlength="12" data-placement="bottom"
+									value="${sessionScope.user.id}" disabled>
 							</div>
-							
+
 							<div class="input-group input-group-lg">
 								<span class="input-group-addon">Password</span> <input
 									type="password" id='signorigin' class="form-control"
@@ -59,6 +59,6 @@
 	</div>
 
 	<%@ include file="/components/_imports.jspf"%>
-	<script src="/js/update/update.js"></script>
+	<script src="/support/update/update.js"></script>
 </body>
 </html>

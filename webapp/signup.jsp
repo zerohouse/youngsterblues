@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,7 +9,6 @@
 	<c:redirect url="usermodify.jsp" />
 </c:if>
 <%@ include file="/components/_css.jspf"%>
-<link rel='stylesheet' href="/support/signup.css">
 </head>
 <body>
 
@@ -53,6 +52,6 @@
 	</div>
 
 	<%@ include file="/components/_imports.jspf"%>
-	<script src="/js/signup/signup.js"></script>
+	<script src="/support/signup/signup.js"></script>
 </body>
 </html>

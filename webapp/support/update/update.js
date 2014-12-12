@@ -125,7 +125,7 @@
 			}
 
 		}).done(function(data) {
-			if (!data.state) {
+			if (!data.success) {
 				alertMessage(data.errorMessage);
 				return;
 			}

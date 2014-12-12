@@ -133,7 +133,7 @@ app
 																		"BrAkELInE")
 													}
 												}).done(function(result) {
-											if (result.state) {
+											if (result.success) {
 												location.href = $scope.link();
 											}
 										});
@@ -195,7 +195,7 @@ app
 														type : type
 													}
 												}).done(function(data) {
-											if (data.state)
+											if (data.success)
 												location.reload();
 										});
 							}
@@ -221,7 +221,7 @@ app
 														content : $scope.content.id
 													}
 												}).done(function(data) {
-											if (data.state) {
+											if (data.success) {
 												contentview.modal('hide');
 												$scope.getContents();
 											}

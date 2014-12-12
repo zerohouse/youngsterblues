@@ -47,7 +47,7 @@ $(window).load(function() {
 				user : JSON.stringify(user)
 			}
 		}).done(function(data) {
-			if (!data.state) {
+			if (!data.success) {
 				errorMessage.show(500);
 				errorMessage.text(data.errorMessage);
 				return;

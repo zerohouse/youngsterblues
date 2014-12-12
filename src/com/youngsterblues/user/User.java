@@ -1,5 +1,7 @@
 package com.youngsterblues.user;
 
+import com.youngsterblues.support.State;
+
 public class User {
 	@Override
 	public String toString() {
@@ -62,9 +64,35 @@ public class User {
 	}
 
 	public boolean matchPassword(String password) {
-		if(this.password.equals(password))
+		if (this.password.equals(password))
 			return true;
 		return false;
+	}
+
+	public static String checkid(String id) {
+		UserDAO userdao = new UserDAO();
+		if (userdao.getUser(id) == null) {
+			return "false";
+		}
+		return "true";
+	}
+
+	public State login() {
+		UserDAO userdao = new UserDAO();
+		User user = userdao.getUser(id);
+
+		State state = new State();
+
+		if (user == null) {
+			state.setState(false, "사용자가 없습니다.");
+			return state;
+		}
+		if (!user.matchPassword(password)) {
+			state.setState(false, "비밀번호가 맞지 않습니다.");
+			return state;
+		}
+		state.setState(true, null);
+		return state;
 	}
 
 }

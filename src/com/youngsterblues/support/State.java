@@ -3,14 +3,22 @@ package com.youngsterblues.support;
 import com.google.gson.Gson;
 
 public class State {
-	@SuppressWarnings("unused")
-	private boolean state;
-	@SuppressWarnings("unused")
+	private boolean success;
 	private String errorMessage;
 
 	public void setState(boolean state, String errorMessage) {
-		this.state = state;
+		this.success = state;
 		this.errorMessage = errorMessage;
+	}
+
+	public boolean isSuccess() {
+		return success;
+	}
+
+	@Override
+	public String toString() {
+		return "State [success=" + success + ", errorMessage=" + errorMessage
+				+ "]";
 	}
 
 	public String toJson() {

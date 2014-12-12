@@ -30,5 +30,37 @@ public class UserTest {
 		System.out.println(state);
 		assertTrue(state.isSuccess());
 	}
+	
+	@Test
+	public void updateTestCaseNull() {
+		User user = new User("zerohuse", "123", null);
+		State state = user.update("123");
+		System.out.println(state);
+		assertFalse(state.isSuccess());
+	}
+	
+	@Test
+	public void updateTestCaseWrongPassword() {
+		User user = new User("zerohouse", "123", null);
+		State state = user.update("123");
+		System.out.println(state);
+		assertFalse(state.isSuccess());
+	}
+	
+	@Test
+	public void updateTestCaseSuccess() {
+		User user = new User("zerohouse", "1234", "그래그래 장그래");
+		State state = user.update("1234");
+		System.out.println(state);
+		assertTrue(state.isSuccess());
+	}
+	
+	@Test
+	public void signUpTestCaseAlreadyExist() {
+		User user = new User("zerohouse", "1234", "그래그래 장그래");
+		State state = user.signup();
+		System.out.println(state);
+		assertFalse(state.isSuccess());
+	}
 
 }

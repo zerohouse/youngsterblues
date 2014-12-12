@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
 import com.youngsterblues.support.State;
 
 @SuppressWarnings("serial")
@@ -15,7 +16,14 @@ import com.youngsterblues.support.State;
 public class UserServlet extends HttpServlet {
 
 	@Override
-	protected void doGet(HttpServletRequest request,
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		req.getSession().removeAttribute("user");
+		resp.sendRedirect("/");
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF8");
 		response.setCharacterEncoding("UTF8"); // this line solves the problem
@@ -34,21 +42,29 @@ public class UserServlet extends HttpServlet {
 			return;
 		}
 
-		User user = new User(request.getParameter("id"),
-				request.getParameter("password"), request.getParameter("name"));
-		State state;
+		Gson gson = new Gson();
+		User user = gson.fromJson(request.getParameter("user"), User.class);
 		
+		State state;
 		switch (path[1]) {
 		case "login":
 			state = user.login();
 			break;
-		case "signup":
-			signup(request, response);
+		case "modify":
+			state = user.update(request.getParameter("password"));
 			break;
-		case "logout":
-			logout(request, response);
+		case "signup":
+			state = user.signup();
+			break;
+		default:
+			state = new State();
 			break;
 		}
+		
+		response.getWriter().write(state.toJson());
+		if (state.isSuccess())
+			request.getSession().setAttribute("user", user);
+
 	}
 
 }

@@ -80,7 +80,6 @@ public class User {
 	public State login() {
 		UserDAO userdao = new UserDAO();
 		User user = userdao.getUser(id);
-
 		State state = new State();
 
 		if (user == null) {
@@ -91,7 +90,42 @@ public class User {
 			state.setState(false, "비밀번호가 맞지 않습니다.");
 			return state;
 		}
-		state.setState(true, null);
+		return state;
+	}
+
+	public State update(String originpassword) {
+		UserDAO userdao = new UserDAO();
+		State state = new State();
+		User user = userdao.getUser(id);
+		
+		if(user == null){
+			state.setState(false, "사용자가 없습니다.");
+			return state;
+		}
+		if (!user.matchPassword(originpassword)) {
+			state.setState(false, "기존 비밀번호를 정확하게 입력해주세요.");
+			return state;
+		}
+		if (!userdao.updateDB(this)) {
+			state.setState(false, "SQL오류가 발생했습니다.");
+			return state;
+		}
+		return state;
+
+	}
+
+	public State signup() {
+		UserDAO userdao = new UserDAO();
+		State state = new State();
+
+		if (userdao.getUser(id) != null) {
+			state.setState(false, "이미 존재하는 아이디입니다.");
+			return state;
+		}
+		if (!userdao.addDB(this)) {
+			state.setState(false, "SQL오류가 발생했습니다.");
+			return state;
+		}
 		return state;
 	}
 

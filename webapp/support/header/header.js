@@ -7,7 +7,9 @@ $().showUp('.navbar', {
 	downClass : 'navbar-hide'
 });
 
-$(window).load(function() { $('.loading').fadeOut(500); });
+$(window).load(function() {
+	$('.loading').fadeOut(500);
+});
 
 (function() {
 
@@ -29,6 +31,10 @@ $(window).load(function() { $('.loading').fadeOut(500); });
 	loginbtn.click(function() {
 		var id = $('#id').val();
 		var password = $('#password').val();
+		var user = {
+			id : id,
+			password : password
+		}
 		if (id == "" || password == "") {
 			errorMessage.show(500);
 			errorMessage.text("아이디와 비밀번호를 입력해주세요.");
@@ -38,10 +44,8 @@ $(window).load(function() { $('.loading').fadeOut(500); });
 			url : "/users/login",
 			type : "POST",
 			data : {
-				id : id,
-				password : password
+				user : JSON.stringify(user)
 			}
-
 		}).done(function(data) {
 			if (!data.state) {
 				errorMessage.show(500);

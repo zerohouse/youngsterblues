@@ -3,7 +3,7 @@ package com.youngsterblues.support;
 import com.google.gson.Gson;
 
 public class State {
-	private boolean success;
+	private boolean success = true;
 	private String errorMessage;
 
 	public void setState(boolean state, String errorMessage) {

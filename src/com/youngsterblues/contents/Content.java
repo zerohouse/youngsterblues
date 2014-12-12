@@ -2,6 +2,9 @@ package com.youngsterblues.contents;
 
 import java.util.Date;
 
+
+import com.youngsterblues.support.State;
+
 public class Content {
 	private int id;
 	private String userId;
@@ -66,4 +69,23 @@ public class Content {
 	public String getType() {
 		return type;
 	}
+
+	public State add() {
+		State state = new State();
+		if (userId == null || head == null || content == null || type == null) {
+			state.setState(false, "필드가 비었음");
+			return state;
+		}
+
+		ContentDAO conDAO = new ContentDAO();
+
+		if (!conDAO.addDB(this)) {
+			state.setState(false, "SQL 에러");
+			return state;
+		}
+
+		return state;
+
+	}
+
 }

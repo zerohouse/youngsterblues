@@ -163,7 +163,8 @@ public class DAO {
 		Date date;
 		for (int i = 0; i < parameters.size(); i++) {
 			if (parameters.get(i) instanceof String) {
-				pstmt.setString(i + 1, (String) parameters.get(i));
+				String param = (String) parameters.get(i);
+				pstmt.setString(i + 1, param.replaceAll("\\<.*?\\>", "").replaceAll("BrAkELInE", "<br>"));
 			} else if (parameters.get(i) instanceof Integer) {
 				pstmt.setInt(i + 1, (Integer) parameters.get(i));
 			} else if (parameters.get(i) instanceof Long) {

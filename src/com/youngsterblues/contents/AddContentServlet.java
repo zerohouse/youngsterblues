@@ -22,11 +22,11 @@ public class AddContentServlet extends HttpServlet {
 		resp.setCharacterEncoding("UTF8"); // this line solves the problem
 		resp.setContentType("application/json");
 
-		User user = (User) req.getSession().getAttribute("user");
-		String id = req.getParameter("id").replaceAll("\\<.*?\\>", "");
-		String head = req.getParameter("head").replaceAll("\\<.*?\\>", "");
-		String content = req.getParameter("content").replaceAll("\\<.*?\\>", "").replaceAll("BrAkELInE", "<br>");
-		String type = req.getParameter("type").replaceAll("\\<.*?\\>", "");
+		User user = (User) req.getSession();
+		String id = req.getParameter("id");
+		String head = req.getParameter("head");
+		String content = req.getParameter("content");
+		String type = req.getParameter("type");
 		State state = new State();
 
 		if (user == null || id == null || head == null || content == null

@@ -23,6 +23,11 @@
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 		</dependency>
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>2.2</version>
+		</dependency>
 
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
@@ -39,17 +44,6 @@
 			<artifactId>junit</artifactId>
 			<version>4.11</version>
 		</dependency>
-		<dependency>
-			<groupId>commons-beanutils</groupId>
-			<artifactId>commons-beanutils</artifactId>
-			<version>1.9.2</version>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet.jsp</groupId>
-			<artifactId>jsp-api</artifactId>
-			<version>2.2</version>
-		</dependency>
-
 
 	</dependencies>
 
@@ -94,8 +88,7 @@
 				<artifactId>maven-dependency-plugin</artifactId>
 				<version>2.9</version>
 				<configuration>
-					<excludeGroupIds>javax.servlet, junit, javax.servlet.jsp,
-						org.apache.tomcat</excludeGroupIds>
+					<excludeGroupIds>junit, org.apache.tomcat</excludeGroupIds>
 					<outputDirectory>${project.basedir}/webapp/WEB-INF/lib</outputDirectory>
 					<overWriteReleases>false</overWriteReleases>
 					<overWriteSnapshots>false</overWriteSnapshots>

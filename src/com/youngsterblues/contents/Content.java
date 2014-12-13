@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import com.google.gson.Gson;
+import com.youngsterblues.support.Methods;
 import com.youngsterblues.support.State;
 import com.youngsterblues.user.User;
 
@@ -25,13 +26,6 @@ public class Content {
 		this.datetime = datetime;
 	}
 
-	public Content(Integer id, String userId, String head, Date datetime) {
-		this.id = id;
-		this.userId = userId;
-		this.head = head;
-		this.datetime = datetime;
-	}
-
 	public Content(String type, String userId, String head, String content,
 			Date datetime) {
 		this.type = type;
@@ -39,6 +33,22 @@ public class Content {
 		this.head = head;
 		this.content = content;
 		this.datetime = datetime;
+	}
+
+	public Content(ArrayList<Object> content) {
+		if (content.size() == 4) {
+			id = (Integer) content.get(0);
+			userId = content.get(1).toString();
+			head = content.get(2).toString();
+			datetime = Methods.parseDate(content.get(3).toString());
+			return;
+		}
+		id = (Integer) content.get(0);
+		type = content.get(1).toString();
+		userId = content.get(2).toString();
+		head = content.get(3).toString();
+		this.content = content.get(4).toString();
+		datetime = Methods.parseDate(content.get(5));
 	}
 
 	@Override
@@ -123,33 +133,33 @@ public class Content {
 		ContentDAO conDAO = new ContentDAO();
 		if (id == null)
 			return null;
-		try { 
+		try {
 			return conDAO.getContent(Integer.parseInt(id));
 		} catch (Exception e) {
 			return null;
 		}
 	}
-	
-	public static String getHeadListJson(String type,String size,String page){
+
+	public static String getHeadListJson(String type, String size, String page) {
 		ContentDAO conDAO = new ContentDAO();
-		if(type==null)
+		if (type == null)
 			type = "free";
-		if(size==null)
+		if (size == null)
 			size = "10";
-		if(page==null)
+		if (page == null)
 			page = "1";
-		ArrayList<Content> contents = conDAO.getContentsHeadList(type, Integer.parseInt(page) ,Integer.parseInt(size));
+		ArrayList<Content> contents = conDAO.getContentsHeadList(type,
+				Integer.parseInt(page), Integer.parseInt(size));
 		ArrayList<Object> result = new ArrayList<Object>();
 		result.add(new ContentDAO().getContentCount(type));
 		result.add(contents);
 		Gson gson = new Gson();
 		return gson.toJson(result);
 	}
-	
-	public String toJson(){
+
+	public String toJson() {
 		Gson gson = new Gson();
 		return gson.toJson(this);
 	}
-
 
 }

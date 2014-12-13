@@ -6,13 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
-
-import com.youngsterblues.support.setting.Setting;
 
 public class DAO {
 
@@ -47,16 +43,6 @@ public class DAO {
 		return con;
 	}
 
-	public Date parseDate(Object object) {
-		SimpleDateFormat datetime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		Date date = null;
-		try {
-			date = datetime.parse(object.toString());
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		return date;
-	}
 
 	public boolean doQuery() {
 		PreparedStatement pstmt = null;

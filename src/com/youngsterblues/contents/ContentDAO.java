@@ -5,11 +5,7 @@ import java.util.ArrayList;
 import com.youngsterblues.support.DAO;
 
 public class ContentDAO {
-	DAO dao;
-
-	public ContentDAO() {
-		dao = new DAO();
-	}
+	DAO dao = new DAO();
 
 	public ArrayList<Content> getContentsHeadList(String type, int page,
 			int size) {
@@ -24,9 +20,7 @@ public class ContentDAO {
 		if (sq.size() == 0)
 			return null;
 		for (int i = 0; i < sq.size(); i++) {
-			content = new Content((Integer) sq.get(i).get(0), sq.get(i).get(1)
-					.toString(), sq.get(i).get(2).toString(), dao.parseDate(sq
-					.get(i).get(3).toString()));
+			content = new Content(sq.get(i));
 			result.add(content);
 		}
 		return result;
@@ -56,9 +50,7 @@ public class ContentDAO {
 		ArrayList<Object> sq = dao.getRecord();
 		if (sq.size() == 0)
 			return null;
-		return new Content((Integer) sq.get(0), sq.get(1).toString(), sq.get(2)
-				.toString(), sq.get(3).toString(), sq.get(4).toString(),
-				dao.parseDate(sq.get(5)));
+		return new Content(sq);
 	}
 
 	public boolean modDB(String userId, Integer contentId, String head,

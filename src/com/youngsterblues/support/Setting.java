@@ -1,4 +1,4 @@
-package com.youngsterblues.support.setting;
+package com.youngsterblues.support;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;

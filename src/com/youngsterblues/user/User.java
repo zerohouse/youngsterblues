@@ -1,5 +1,7 @@
 package com.youngsterblues.user;
 
+import java.util.ArrayList;
+
 import com.youngsterblues.support.State;
 
 public class User {
@@ -17,6 +19,12 @@ public class User {
 		this.id = id;
 		this.password = password;
 		this.name = name;
+	}
+
+	public User(ArrayList<Object> user) {
+		id = (String) user.get(0);
+		password = (String) user.get(1);
+		name = (String) user.get(2);
 	}
 
 	public String getId() {

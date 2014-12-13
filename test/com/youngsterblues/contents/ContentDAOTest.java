@@ -18,5 +18,11 @@ public class ContentDAOTest {
 		Content content = new Content(58, null, "zerohouse", "그림", "그림", null);
 		content.mod();
 	}
+	
+	@Test
+	public void getTest() {
+		Content content = Content.getContent("10");
+		System.out.println(content);
+	}
 
 }

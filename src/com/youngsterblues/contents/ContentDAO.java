@@ -42,9 +42,10 @@ public class ContentDAO {
 		return dao.doQuery();
 	}
 
-	public boolean deleteDB(int contentId) {
-		dao.setSql("delete from contents where id=?");
+	public boolean deleteDB(int contentId, String userId) {
+		dao.setSql("delete from contents where id=? and userid=?");
 		dao.addParameters(contentId);
+		dao.addParameters(userId);
 		return dao.doQuery();
 	}
 

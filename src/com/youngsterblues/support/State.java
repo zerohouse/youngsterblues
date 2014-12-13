@@ -2,6 +2,7 @@ package com.youngsterblues.support;
 
 import com.google.gson.Gson;
 
+
 public class State {
 	private boolean success = true;
 	private String errorMessage;
@@ -20,9 +21,10 @@ public class State {
 		return "State [success=" + success + ", errorMessage=" + errorMessage
 				+ "]";
 	}
-
-	public String toJson() {
+	
+	public String toJson(){
 		Gson gson = new Gson();
 		return gson.toJson(this);
 	}
+
 }

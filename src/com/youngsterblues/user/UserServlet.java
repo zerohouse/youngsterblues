@@ -60,11 +60,9 @@ public class UserServlet extends HttpServlet {
 			state = new State();
 			break;
 		}
-		
 		response.getWriter().write(state.toJson());
 		if (state.isSuccess())
 			request.getSession().setAttribute("user", user);
-
 	}
 
 }

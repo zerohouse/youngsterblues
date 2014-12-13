@@ -1,9 +1,11 @@
 package com.youngsterblues.contents;
 
+import java.util.ArrayList;
 import java.util.Date;
 
-
+import com.google.gson.Gson;
 import com.youngsterblues.support.State;
+import com.youngsterblues.user.User;
 
 public class Content {
 	private int id;
@@ -72,20 +74,82 @@ public class Content {
 
 	public State add() {
 		State state = new State();
-		if (userId == null || head == null || content == null || type == null) {
+		if (isEmptyContent() || type == null) {
+			state.setState(false, "필드가 비었음");
+			return state;
+		}
+		ContentDAO conDAO = new ContentDAO();
+		if (!conDAO.addDB(this)) {
+			state.setState(false, "SQL 에러");
+			return state;
+		}
+		return state;
+	}
+
+	public State mod() {
+		State state = new State();
+		if (isEmptyContent()) {
 			state.setState(false, "필드가 비었음");
 			return state;
 		}
 
 		ContentDAO conDAO = new ContentDAO();
-
-		if (!conDAO.addDB(this)) {
+		if (!conDAO.modDB(userId, id, head, content)) {
 			state.setState(false, "SQL 에러");
-			return state;
 		}
-
 		return state;
-
 	}
+
+	private boolean isEmptyContent() {
+		return userId == null || head == null || content == null;
+	}
+
+	public State delete() {
+		State state = new State();
+		ContentDAO conDAO = new ContentDAO();
+		if (!conDAO.deleteDB(id, userId)) {
+			state.setState(false, "SQL 에러");
+		}
+		return state;
+	}
+
+	public boolean checkUser(User user) {
+		if (userId.equals(user.getId()))
+			return true;
+		return false;
+	}
+
+	public static Content getContent(String id) {
+		ContentDAO conDAO = new ContentDAO();
+		if (id == null)
+			return null;
+		try { 
+			return conDAO.getContent(Integer.parseInt(id));
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	
+	public static String getHeadListJson(String type,String size,String page){
+		ContentDAO conDAO = new ContentDAO();
+		if(type==null)
+			type = "free";
+		if(size==null)
+			size = "10";
+		if(page==null)
+			page = "1";
+		ArrayList<Content> contents = conDAO.getContentsHeadList(type, Integer.parseInt(page) ,Integer.parseInt(size));
+		ArrayList<Object> result = new ArrayList<Object>();
+		result.add(new ContentDAO().getContentCount(type));
+		result.add(contents);
+		Gson gson = new Gson();
+		return gson.toJson(result);
+	}
+	
+	public String toJson(){
+		Gson gson = new Gson();
+		return gson.toJson(this);
+	}
+
 
 }

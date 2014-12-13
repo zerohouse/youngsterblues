@@ -120,7 +120,7 @@ app
 													headers : {
 														'Content-Type' : 'application/x-www-form-urlencoded'
 													},
-													url : '/contents/modcontent/',
+													url : '/contents/modify/mod/',
 													dataType : "json",
 													data : {
 														id : $scope.content.id,
@@ -180,13 +180,12 @@ app
 										.ajax(
 												{
 													type : 'POST',
-													url : '/contents/addcontent/',
+													url : '/contents/modify/add/',
 													headers : {
 														'Content-Type' : 'application/x-www-form-urlencoded'
 													},
 													dataType : "json",
 													data : {
-														id : $('#userId').val(),
 														content : $scope.addcontent.content
 																.replace(
 																		/\r\n|\r|\n/g,
@@ -211,14 +210,13 @@ app
 										.ajax(
 												{
 													type : 'POST',
-													url : '/contents/deletecontent/',
+													url : '/contents/modify/delete/',
 													headers : {
 														'Content-Type' : 'application/x-www-form-urlencoded'
 													},
 													dataType : "json",
 													data : {
-														id : $('#userId').val(),
-														content : $scope.content.id
+														id : $scope.content.id
 													}
 												}).done(function(data) {
 											if (data.success) {

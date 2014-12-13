@@ -10,6 +10,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Map;
+
+import com.youngsterblues.support.setting.Setting;
 
 public class DAO {
 
@@ -31,9 +34,10 @@ public class DAO {
 
 	public Connection getConnection() {
 		Connection con = null;
-		String url = "jdbc:mysql://youngsterblues.crb97qp69ve9.ap-northeast-1.rds.amazonaws.com:3306/youngster?useUnicode=true&characterEncoding=utf8";
-		String id = "zerohouse";
-		String pw = "qkrtjdgh1";
+		Map<String, String> db = Setting.get("db");
+		String url = db.get("url");
+		String id = db.get("id");
+		String pw = db.get("password");
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection(url, id, pw);
@@ -164,7 +168,8 @@ public class DAO {
 		for (int i = 0; i < parameters.size(); i++) {
 			if (parameters.get(i) instanceof String) {
 				String param = (String) parameters.get(i);
-				pstmt.setString(i + 1, param.replaceAll("\\<.*?\\>", "").replaceAll("BrAkELInE", "<br>"));
+				pstmt.setString(i + 1, param.replaceAll("\\<.*?\\>", "")
+						.replaceAll("BrAkELInE", "<br>"));
 			} else if (parameters.get(i) instanceof Integer) {
 				pstmt.setInt(i + 1, (Integer) parameters.get(i));
 			} else if (parameters.get(i) instanceof Long) {

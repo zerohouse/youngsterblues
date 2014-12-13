@@ -182,6 +182,7 @@
 		var type = '${type}';
 		var content = '${content}';
 		var page = '${page}';
+		var url = '${url}'
 		if (page == '')
 			page = 1;
 		$(document).ready(function() {

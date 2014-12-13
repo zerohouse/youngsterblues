@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.youngsterblues.support.setting.Setting;
+
 @SuppressWarnings("serial")
 @WebServlet("/board/*")
 public class BoardServlet extends HttpServlet {
@@ -28,7 +30,7 @@ public class BoardServlet extends HttpServlet {
 			req.setAttribute("content", "page");
 			req.setAttribute("page", path[3]);
 		}
-
+		req.setAttribute("url", Setting.get("url").get("default"));
 		dispatcher.forward(req, resp);
 
 	}

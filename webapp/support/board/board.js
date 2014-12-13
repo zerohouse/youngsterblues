@@ -43,7 +43,7 @@ app
 										.push({
 											page : "|<",
 											link : page == 1 ? "#"
-													: "http://youngsterblues.com/board/"
+													: url + "/board/"
 															+ type
 															+ "/page/"
 															+ 1,
@@ -53,7 +53,7 @@ app
 										.push({
 											page : "<",
 											link : page == 1 ? "#"
-													: "http://youngsterblues.com/board/"
+													: url + "/board/"
 															+ type
 															+ "/page/"
 															+ (page - 1),
@@ -68,7 +68,7 @@ app
 									$scope.paginations
 											.push({
 												page : j,
-												link : "http://youngsterblues.com/board/"
+												link : url + "/board/"
 														+ type + "/page/" + j,
 												getClass : page == j
 											});
@@ -81,7 +81,7 @@ app
 										.push({
 											page : ">",
 											link : page == j ? "#"
-													: "http://youngsterblues.com/board/"
+													: url + "/board/"
 															+ type
 															+ "/page/"
 															+ (parseInt(page) + 1),
@@ -93,7 +93,7 @@ app
 										.push({
 											page : ">|",
 											link : page == j ? "#"
-													: "http://youngsterblues.com/board/"
+													: url + "/board/"
 															+ type
 															+ "/page/"
 															+ (parseInt(count
@@ -108,7 +108,7 @@ app
 							$scope.addcontent = {};
 
 							$scope.link = function() {
-								return 'http://youngsterblues.com/board/'
+								return url + "/board/"
 										+ type + '/' + $scope.content.id;
 							}
 

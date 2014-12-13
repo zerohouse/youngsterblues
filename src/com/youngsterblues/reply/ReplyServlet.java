@@ -1,4 +1,4 @@
-package com.youngsterblues.contents;
+package com.youngsterblues.reply;
 
 import java.io.IOException;
 import java.util.Date;
@@ -13,14 +13,14 @@ import com.youngsterblues.support.State;
 import com.youngsterblues.user.User;
 
 @SuppressWarnings("serial")
-@WebServlet("/contents/*")
-public class ContentServlet extends HttpServlet {
+@WebServlet("/reply/*")
+public class ReplyServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF8");
-		response.setCharacterEncoding("UTF8"); // this line solves the problem
+		response.setCharacterEncoding("UTF8");
 		response.setContentType("application/json");
 
 		String[] path = request.getPathInfo().split("/");
@@ -29,14 +29,13 @@ public class ContentServlet extends HttpServlet {
 
 		if (path.length == 2) {
 			switch (path[1]) {
-			case "getcontent":
-				response.getWriter()
-						.write(Content.getContent(request.getParameter("id"))
-								.toJson());
-				return;
-			case "getcontents":
+			case "getreply":
 				response.getWriter().write(
-						Content.getHeadListJson(request.getParameter("type"),
+						Reply.getReply(request.getParameter("rid")).toJson());
+				return;
+			case "getreplies":
+				response.getWriter().write(
+						Reply.getReplyListJson(request.getParameter("cid"),
 								request.getParameter("size"),
 								request.getParameter("page")));
 				return;
@@ -44,22 +43,21 @@ public class ContentServlet extends HttpServlet {
 		}
 
 		if (path.length == 3) {
-			Content content = new Content(request.getParameter("id"), request.getParameter("type"),
-					user.getId(), request.getParameter("head"),
-					request.getParameter("content"), new Date());
-			
+			Reply reply = new Reply(request.getParameter("rid"),
+					request.getParameter("cid"), user.getId(),
+					request.getParameter("reply"), new Date());
 			State state;
 			switch (path[2]) {
 			case "add":
-				state = content.add();
+				state = reply.add();
 				response.getWriter().write(state.toJson());
 				return;
 			case "mod":
-				state = content.mod();
+				state = reply.mod();
 				response.getWriter().write(state.toJson());
 				return;
 			case "delete":
-				state = content.delete();
+				state = reply.delete();
 				response.getWriter().write(state.toJson());
 				return;
 			default:

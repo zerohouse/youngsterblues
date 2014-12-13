@@ -9,16 +9,17 @@ import com.youngsterblues.support.State;
 import com.youngsterblues.user.User;
 
 public class Content {
-	private int id;
+	private Integer id;
 	private String userId;
 	private String head;
 	private String type;
 	private String content;
 	private Date datetime;
 
-	public Content(int id, String type, String userId, String head,
+	public Content(String id, String type, String userId, String head,
 			String content, Date datetime) {
-		this.id = id;
+		if (id != null)
+			this.id = Integer.parseInt(id);
 		this.type = type;
 		this.userId = userId;
 		this.head = head;
@@ -104,7 +105,7 @@ public class Content {
 		}
 
 		ContentDAO conDAO = new ContentDAO();
-		if (!conDAO.modDB(userId, id, head, content)) {
+		if (!conDAO.modDB(this)) {
 			state.setState(false, "SQL 에러");
 		}
 		return state;
@@ -117,7 +118,7 @@ public class Content {
 	public State delete() {
 		State state = new State();
 		ContentDAO conDAO = new ContentDAO();
-		if (!conDAO.deleteDB(id, userId)) {
+		if (!conDAO.deleteDB(this)) {
 			state.setState(false, "SQL 에러");
 		}
 		return state;
@@ -143,7 +144,7 @@ public class Content {
 	public static String getHeadListJson(String type, String size, String page) {
 		ContentDAO conDAO = new ContentDAO();
 		if (type == null)
-			type = "free";
+			return null;
 		if (size == null)
 			size = "10";
 		if (page == null)

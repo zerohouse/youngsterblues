@@ -36,4 +36,38 @@ public class ReplyDAO {
 		return result;
 	}
 
+	public boolean addDB(Reply reply) {
+		dao.setSql("insert into reply values(null,?,?,?,?)");
+		dao.addParameters(reply.getCid());
+		dao.addParameters(reply.getUserId());
+		dao.addParameters(reply.getReply());
+		dao.addParameters(reply.getTimestamp());
+		return dao.doQuery();
+	}
+	
+	public boolean modDB(Reply reply) {
+		dao.setSql("update reply set reply=? where rid=? and userid=?");
+		dao.addParameters(reply.getReply());
+		dao.addParameters(reply.getRid());
+		dao.addParameters(reply.getUserId());
+		return dao.doQuery();
+	}
+	
+	public boolean deleteDB(Reply reply) {
+		dao.setSql("delete from reply where rid=? and userid=?");
+		dao.addParameters(reply.getRid());
+		dao.addParameters(reply.getUserId());
+		return dao.doQuery();
+	}
+
+	public Integer getContentCount(String cid) {
+		dao.setSql("select count(rid) from contents where cid=?");
+		dao.addParameters(Integer.parseInt(cid));
+		dao.setResultSize(1);
+		ArrayList<Object> sq = dao.getRecord();
+		if (sq.size() == 0)
+			return null;
+		return Integer.parseInt(sq.get(0).toString());
+	}
+
 }

@@ -25,22 +25,15 @@ public class ContentDAO {
 		}
 		return result;
 	}
-
-	public boolean addDB(Content content) {
-		dao.setSql("insert into contents values(null,?,?,?,?,?)");
-		dao.addParameters(content.getType());
-		dao.addParameters(content.getUserId());
-		dao.addParameters(content.getHead());
-		dao.addParameters(content.getContent());
-		dao.addParameters(content.getDatetime());
-		return dao.doQuery();
-	}
-
-	public boolean deleteDB(int contentId, String userId) {
-		dao.setSql("delete from contents where id=? and userid=?");
-		dao.addParameters(contentId);
-		dao.addParameters(userId);
-		return dao.doQuery();
+	
+	public Integer getContentCount(String type) {
+		dao.setSql("select count(id) from contents where type=?");
+		dao.addParameters(type);
+		dao.setResultSize(1);
+		ArrayList<Object> sq = dao.getRecord();
+		if (sq.size() == 0)
+			return null;
+		return Integer.parseInt(sq.get(0).toString());
 	}
 
 	public Content getContent(int id) {
@@ -53,24 +46,33 @@ public class ContentDAO {
 		return new Content(sq);
 	}
 
-	public boolean modDB(String userId, Integer contentId, String head,
-			String content) {
-		dao.setSql("update contents set head=?, content=? where id=? and userid=?");
-		dao.addParameters(head);
-		dao.addParameters(content);
-		dao.addParameters(contentId);
-		dao.addParameters(userId);
+	public boolean addDB(Content content) {
+		dao.setSql("insert into contents values(null,?,?,?,?,?)");
+		dao.addParameters(content.getType());
+		dao.addParameters(content.getUserId());
+		dao.addParameters(content.getHead());
+		dao.addParameters(content.getContent());
+		dao.addParameters(content.getDatetime());
 		return dao.doQuery();
 	}
 
-	public Integer getContentCount(String type) {
-		dao.setSql("select count(id) from contents where type=?");
-		dao.addParameters(type);
-		dao.setResultSize(1);
-		ArrayList<Object> sq = dao.getRecord();
-		if (sq.size() == 0)
-			return null;
-		return Integer.parseInt(sq.get(0).toString());
+	public boolean deleteDB(Content content) {
+		dao.setSql("delete from contents where id=? and userid=?");
+		dao.addParameters(content.getId());
+		dao.addParameters(content.getUserId());
+		return dao.doQuery();
 	}
+
+
+	public boolean modDB(Content content) {
+		dao.setSql("update contents set head=?, content=? where id=? and userid=?");
+		dao.addParameters(content.getHead());
+		dao.addParameters(content.getContent());
+		dao.addParameters(content.getId());
+		dao.addParameters(content.getUserId());
+		return dao.doQuery();
+	}
+
+
 
 }

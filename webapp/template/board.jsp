@@ -101,6 +101,21 @@
 						<p ng-bind-html="content.content"></p>
 					</div>
 					<div class="modal-footer">
+						<div ng-show="!reply.show" ng-click="getReplies()">댓글보기</div>
+						<ul class="reply" ng-show="reply.show">
+							<li ng-repeat="reply in reply.replies"><span>{{reply.userId}}</span><span>{{reply.reply}}</span><small>{{reply.timestamp}}</small></li>
+							<li ng-show="reply.isWrited()"><span>{{reply.new.author}}</span><span>{{reply.new.reply}}</span></li>
+
+							<div>
+								<span>{{reply.new.author}}</span>
+								<input type='text' ng-model="reply.new.reply" />
+								<span class='btn btn-success' ng-click="writeReply()">댓글쓰기</span>
+							</div>
+
+						</ul>
+
+
+
 						<div class="btn btn-primary" ng-show="isMine(content.userId)"
 							ng-click="deleteContent()">삭제</div>
 						<div class="btn btn-success" ng-show="isMine(content.userId)"

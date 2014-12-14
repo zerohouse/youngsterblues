@@ -39,68 +39,55 @@ app
 							$scope.setPage = function(count) {
 								$scope.paginations = [];
 
-								$scope.paginations
-										.push({
-											page : "|<",
-											link : page == 1 ? "#"
-													: url + "/board/"
-															+ type
-															+ "/page/"
-															+ 1,
-											disabled : page == 1
-										});
-								$scope.paginations
-										.push({
-											page : "<",
-											link : page == 1 ? "#"
-													: url + "/board/"
-															+ type
-															+ "/page/"
-															+ (page - 1),
-											disabled : page == 1
-										});
+								$scope.paginations.push({
+									page : "|<",
+									link : page == 1 ? "#" : url + "/board/"
+											+ type + "/page/" + 1,
+									disabled : page == 1
+								});
+								$scope.paginations.push({
+									page : "<",
+									link : page == 1 ? "#" : url + "/board/"
+											+ type + "/page/" + (page - 1),
+									disabled : page == 1
+								});
 								var contentsinonepage = 10;
 								var max = parseInt(count / contentsinonepage) + 1;
 								var startpage = parseInt((page - 1) / 5) * 5 + 1
 								var j = startpage;
 
 								for (var i = 0; i < 5; i++) {
-									$scope.paginations
-											.push({
-												page : j,
-												link : url + "/board/"
-														+ type + "/page/" + j,
-												getClass : page == j
-											});
+									$scope.paginations.push({
+										page : j,
+										link : url + "/board/" + type
+												+ "/page/" + j,
+										getClass : page == j
+									});
 									if (j >= max)
 										break;
 									j++;
 								}
 
-								$scope.paginations
-										.push({
-											page : ">",
-											link : page == j ? "#"
-													: url + "/board/"
-															+ type
-															+ "/page/"
-															+ (parseInt(page) + 1),
-											disabled : page == (parseInt(count
-													/ contentsinonepage) + 1)
-										});
+								$scope.paginations.push({
+									page : ">",
+									link : page == j ? "#" : url + "/board/"
+											+ type + "/page/"
+											+ (parseInt(page) + 1),
+									disabled : page == (parseInt(count
+											/ contentsinonepage) + 1)
+								});
 
-								$scope.paginations
-										.push({
-											page : ">|",
-											link : page == j ? "#"
-													: url + "/board/"
-															+ type
-															+ "/page/"
-															+ (parseInt(count
-																	/ contentsinonepage) + 1),
-											disabled : page == (parseInt(count
-													/ contentsinonepage) + 1)
-										});
+								$scope.paginations.push({
+									page : ">|",
+									link : page == j ? "#" : url
+											+ "/board/"
+											+ type
+											+ "/page/"
+											+ (parseInt(count
+													/ contentsinonepage) + 1),
+									disabled : page == (parseInt(count
+											/ contentsinonepage) + 1)
+								});
 
 							};
 							$scope.getContents();
@@ -108,8 +95,8 @@ app
 							$scope.addcontent = {};
 
 							$scope.link = function() {
-								return url + "/board/"
-										+ type + '/' + $scope.content.id;
+								return url + "/board/" + type + '/'
+										+ $scope.content.id;
 							}
 
 							$scope.modContentSubmit = function() {
@@ -150,6 +137,7 @@ app
 
 							$scope.getContent = function(id) {
 								loading.fadeIn(500);
+								$scope.replyReset();
 								$
 										.ajax(
 												{
@@ -223,6 +211,76 @@ app
 												contentview.modal('hide');
 												$scope.getContents();
 											}
+										});
+							}
+							
+							$scope.replyReset = function (){
+								$scope.reply = {
+										show : false,
+										new : { author: $('#userId').val(),
+												reply : ""},
+										replies : [],
+										isWrited : function (){
+											return $scope.reply.new.reply.length > 0; 
+										}
+								} 
+							}
+							
+							$scope.replyReset();
+							
+							$scope.getReplies = function() {
+								$scope.reply.show = true;
+								loading.fadeIn(500);
+								$
+										.ajax(
+												{
+													type : 'POST',
+													url : '/reply/getreplies/',
+													headers : {
+														'Content-Type' : 'application/x-www-form-urlencoded'
+													},
+													dataType : "json",
+													data : {
+														cid : $scope.content.id
+													}
+												}).done(function(data) {
+											if (data == 'null') {
+												alert('댓글이 없네요!?');
+												return;
+											}
+											$scope.reply.replies = data[1];
+											$scope.$apply();
+											console.log(data);
+											contentview.modal('show');
+											loading.fadeOut(500);
+										});
+							}
+							
+							$scope.writeReply = function() {
+								loading.fadeIn(500);
+								$
+										.ajax(
+												{
+													type : 'POST',
+													url : '/reply/modify/add/',
+													headers : {
+														'Content-Type' : 'application/x-www-form-urlencoded'
+													},
+													dataType : "json",
+													data : {
+														cid : $scope.content.id,
+														reply : $scope.reply.new.reply
+													}
+												}).done(function(data) {
+											if (data == 'null') {
+												alert('?!');
+												return;
+											}
+// $scope.reply.replies = data;
+// $scope.$apply();
+											console.log(data);
+											contentview.modal('show');
+											loading.fadeOut(500);
 										});
 							}
 

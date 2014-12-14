@@ -11,9 +11,9 @@ public class ContentDAO {
 			int size) {
 		Content content;
 		dao.setSql("select id, userid, head, timestamp from contents where type=? order by id desc limit ?, ?");
-		dao.addParameters(type);
-		dao.addParameters((page - 1) * 10);
-		dao.addParameters(size);
+		dao.addParameter(type);
+		dao.addParameter((page - 1) * 10);
+		dao.addParameter(size);
 		dao.setResultSize(4);
 		ArrayList<ArrayList<Object>> sq = dao.getRecords();
 		ArrayList<Content> result = new ArrayList<Content>();
@@ -28,7 +28,7 @@ public class ContentDAO {
 	
 	public Integer getContentCount(String type) {
 		dao.setSql("select count(id) from contents where type=?");
-		dao.addParameters(type);
+		dao.addParameter(type);
 		dao.setResultSize(1);
 		ArrayList<Object> sq = dao.getRecord();
 		if (sq.size() == 0)
@@ -38,7 +38,7 @@ public class ContentDAO {
 
 	public Content getContent(int id) {
 		dao.setSql("select * from contents where id=?");
-		dao.addParameters(id);
+		dao.addParameter(id);
 		dao.setResultSize(6);
 		ArrayList<Object> sq = dao.getRecord();
 		if (sq.size() == 0)
@@ -48,28 +48,28 @@ public class ContentDAO {
 
 	public boolean addDB(Content content) {
 		dao.setSql("insert into contents values(null,?,?,?,?,?)");
-		dao.addParameters(content.getType());
-		dao.addParameters(content.getUserId());
-		dao.addParameters(content.getHead());
-		dao.addParameters(content.getContent());
-		dao.addParameters(content.getDatetime());
+		dao.addParameter(content.getType());
+		dao.addParameter(content.getUserId());
+		dao.addParameter(content.getHead());
+		dao.addParameter(content.getContent());
+		dao.addParameter(content.getDatetime());
 		return dao.doQuery();
 	}
 
 	public boolean deleteDB(Content content) {
 		dao.setSql("delete from contents where id=? and userid=?");
-		dao.addParameters(content.getId());
-		dao.addParameters(content.getUserId());
+		dao.addParameter(content.getId());
+		dao.addParameter(content.getUserId());
 		return dao.doQuery();
 	}
 
 
 	public boolean modDB(Content content) {
 		dao.setSql("update contents set head=?, content=? where id=? and userid=?");
-		dao.addParameters(content.getHead());
-		dao.addParameters(content.getContent());
-		dao.addParameters(content.getId());
-		dao.addParameters(content.getUserId());
+		dao.addParameter(content.getHead());
+		dao.addParameter(content.getContent());
+		dao.addParameter(content.getId());
+		dao.addParameter(content.getUserId());
 		return dao.doQuery();
 	}
 

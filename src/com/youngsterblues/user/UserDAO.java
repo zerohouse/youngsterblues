@@ -10,7 +10,7 @@ public class UserDAO {
 
 	public User getUser(String id) {
 		dao.setSql("select * from user where id=?");
-		dao.addParameters(id);
+		dao.addParameter(id);
 		dao.setResultSize(3);
 		ArrayList<Object> user = dao.getRecord();
 		if (user.size() == 0)
@@ -20,9 +20,9 @@ public class UserDAO {
 
 	public boolean addDB(User user) {
 		dao.setSql("insert into user values(?,?,?)");
-		dao.addParameters(user.getId());
-		dao.addParameters(user.getPassword());
-		dao.addParameters(user.getName());
+		dao.addParameter(user.getId());
+		dao.addParameter(user.getPassword());
+		dao.addParameter(user.getName());
 		return dao.doQuery();
 	}
 
@@ -35,9 +35,9 @@ public class UserDAO {
 				: user.getPassword();
 
 		dao.setSql("update user set name=?, password=? where id=?");
-		dao.addParameters(name);
-		dao.addParameters(password);
-		dao.addParameters(user.getId());
+		dao.addParameter(name);
+		dao.addParameter(password);
+		dao.addParameter(user.getId());
 		return dao.doQuery();
 	}
 }

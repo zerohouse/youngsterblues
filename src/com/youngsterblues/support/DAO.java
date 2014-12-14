@@ -24,7 +24,7 @@ public class DAO {
 		this.resultSize = resultSize;
 	}
 
-	public void addParameters(Object parameter) {
+	public void addParameter(Object parameter) {
 		parameters.add(parameter);
 	}
 

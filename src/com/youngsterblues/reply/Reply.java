@@ -46,8 +46,8 @@ public class Reply {
 	}
 
 	public Reply(ArrayList<Object> reply) {
-		rid = Integer.parseInt((String) reply.get(0));
-		cid = Integer.parseInt((String) reply.get(1));
+		rid = (Integer) reply.get(0);
+		cid = (Integer) reply.get(1);
 		userId = (String) reply.get(2);
 		this.reply = (String) reply.get(3);
 		timestamp = Methods.parseDate(reply.get(4));
